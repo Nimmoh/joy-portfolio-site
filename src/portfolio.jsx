@@ -25,7 +25,7 @@ const Portfolio = () => {
     {
       title: 'Flutter Developer & Customer Support',
       company: 'DUKAKIT',
-      period: 'April 2025 – Present',
+    //   period: 'April 2025 – Present',
       highlights: [
         'Built and maintained Dukakit\'s POS mobile app using Flutter',
         'Handled customer support, resolving user issues and guiding clients',
@@ -36,7 +36,7 @@ const Portfolio = () => {
     {
       title: 'Junior Developer & Digital Marketer',
       company: 'WEBINC TECHNOLOGIES',
-      period: 'December 2024 - Present',
+    //   period: 'December 2024 - Present',
       highlights: [
         'Developed and maintained backend services using Node.js & Express.js',
         'Built and tested RESTful APIs to streamline business operations',
@@ -47,23 +47,29 @@ const Portfolio = () => {
     {
       title: 'Junior Mobile Developer & System Support',
       company: 'VIEWTECH LIMITED',
-      period: 'January 2024 - November 2024',
+    //   period: 'January 2024 - November 2024',
       highlights: [
         'Built Flutter mobile applications with API integration',
         'Assisted in network troubleshooting and system integration',
         'Integrated SasaPay API for digital payment solutions',
         'Implemented basic authentication and security measures'
       ]
+    },
+      {
+      title: 'Freelance Developer',
+      highlights: [
+        'As a freelance developer, I design, develop, and deploy digital solutions for individuals, startups, and small businesses. My work focuses on building user-friendly websites, API-powered applications, and mobile apps that improve business operations and customer engagement. I manage full project cycles from requirements gathering and UI/UX planning to development, testing, deployment, and basic client training.'
+      ]
     }
   ];
 
   const projects = [
     {
-      title: 'Merchant App',
-      description: 'A mobile merchant application for business transactions and management. Built with modern mobile development practices for seamless user experience.',
-      tech: ['Flutter', 'Dart', 'Mobile Development'],
-      category: 'Mobile',
-      github: 'https://github.com/Nimmoh/merchant_app',
+      title: 'WebInc Website',
+      description: 'A professional Node.js backend for handling contact form submissions with email functionality, built with Express.js and structured for scalability.',
+      tech: ['HTML', 'CSS', 'JavaScript' ],
+      category: 'Website',
+      github: 'https://github.com/Nimmoh/webInc',
       featured: true
     },
     {
@@ -71,57 +77,74 @@ const Portfolio = () => {
       description: 'Personal portfolio website showcasing projects, skills, and professional experience. Built with responsive design and modern web technologies.',
       tech: ['HTML', 'CSS', 'JavaScript'],
       category: 'Web',
-      github: 'https://github.com/Nimmoh/porfolio_site',
+      github: 'https://github.com/Nimmoh/joy-porfolio_site',
       featured: true
     },
-    {
-      title: 'Dukakit POS System',
-      description: 'A comprehensive Point of Sale mobile application for small businesses, featuring inventory management, sales tracking, and customer management.',
-      tech: ['Flutter', 'Dart', 'API Integration'],
-      category: 'Mobile',
+      {
+      title: 'Construction Website',
+      description: 'Personal portfolio website showcasing projects, skills, and professional experience. Built with responsive design and modern web technologies.',
+      tech: ['HTML', 'CSS', 'JavaScript'],
+      category: 'Web',
+      github: 'https://github.com/Nimmoh/construction-website',
       featured: true
     },
-    {
-      title: 'RESTful API Services',
-      description: 'Backend services and APIs built for various business operations including authentication, data management, and payment processing.',
-      tech: ['Node.js', 'Express.js', 'MongoDB'],
-      category: 'Backend'
+  
+      {
+      title: 'CarWash Management System',
+      description: 'A comprehensive React-based management system for car wash businesses with real-time tracking of services, payments, and expenses.',
+      tech: ['HTML', 'CSS', 'JavaScript'],
+      category: 'Web',
+      github: 'https://github.com/Nimmoh/carwash-management',
+      featured: true
     },
+     {
+      title: 'E-commerce Website',
+      description: 'A complete e-commerce platform for tiles, terrazzo, and hardware products with advanced features including product visualization, tile calculator, order tracking, and customer account management.',
+      tech: ['HTML', 'CSS', 'JavaScript'],
+      category: 'Web',
+      github: 'https://github.com/Nimmoh/spearmode',
+      featured: true
+    },
+    // {
+    //   title: 'Dukakit POS System',
+    //   description: 'A comprehensive Point of Sale mobile application for small businesses, featuring inventory management, sales tracking, and customer management.',
+    //   tech: ['Flutter', 'Dart', 'API Integration'],
+    //   category: 'Mobile',
+    //   featured: true
+    // },
+    // {
+    //   title: 'RESTful API Services',
+    //   description: 'Backend services and APIs built for various business operations including authentication, data management, and payment processing.',
+    //   tech: ['Node.js', 'Express.js', 'MongoDB'],
+    //   category: 'Backend'
+    // },
     {
-      title: 'SasaPay Integration',
+      title: 'API Integration',
       description: 'Digital payment solution integration enabling secure mobile money transactions for business applications.',
       tech: ['Flutter', 'API Integration', 'Security'],
       category: 'Mobile'
     },
-    {
-      title: 'Business Web Applications',
-      description: 'Full-stack web applications featuring responsive design, API integration, and database management for client business needs.',
-      tech: ['React.js', 'Node.js', 'MongoDB'],
-      category: 'Full-Stack'
-    }
+    // {
+    //   title: 'Business Web Applications',
+    //   description: 'Full-stack web applications featuring responsive design, API integration, and database management for client business needs.',
+    //   tech: ['React.js', 'Node.js', 'MongoDB'],
+    //   category: 'Full-Stack'
+    // }
   ];
 
   const education = [
     {
       degree: 'Bachelor of Science in Information Technology',
       institution: 'Jomo Kenyatta University of Agriculture and Technology',
-      period: '2019 - 2023'
+    //   period: '2019 - 2023'
     },
-    {
-      degree: 'Diploma in Information Technology',
-      institution: 'Jomo Kenyatta University of Agriculture and Technology',
-      period: '2016 - 2018'
-    },
+   
     {
       degree: 'Mobile Software Development',
       institution: 'EMobilis Mobile Technology Institute',
-      period: 'February - June 2018'
+    //   period: 'February - June 2018'
     },
-    {
-      degree: 'Introduction to Python',
-      institution: 'European Business University of Luxembourg',
-      period: 'June - August 2022'
-    }
+    
   ];
 
   const scrollToSection = (sectionId) => {
@@ -302,7 +325,7 @@ const Portfolio = () => {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="orbitron text-2xl font-bold gradient-text">
-              JOY WAIRIMU
+              JOY NDABARI
             </div>
             
             {/* Desktop Navigation */}
@@ -358,9 +381,8 @@ const Portfolio = () => {
             </div>
             
             <h1 className="syne text-6xl md:text-7xl font-black mb-4">
-              <span className="gradient-text">NDABARI JOY</span>
+              <span className="gradient-text">JOY NDABARI</span>
               <br />
-              <span className="text-slate-200">WAIRIMU</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-slate-400 mb-4 font-medium">
@@ -381,7 +403,8 @@ const Portfolio = () => {
                 <Github size={20} />
                 GitHub
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-full font-semibold border-2 border-blue-500 text-blue-400 hover:bg-blue-500/10 transition-all flex items-center gap-2">
+              <a href="www.linkedin.com/in/joy-ndabari-36897a165"
+               target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-full font-semibold border-2 border-blue-500 text-blue-400 hover:bg-blue-500/10 transition-all flex items-center gap-2">
                 <Linkedin size={20} />
                 LinkedIn
               </a>
@@ -637,7 +660,7 @@ const Portfolio = () => {
               <Github size={24} />
               GitHub
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="px-8 py-4 rounded-full font-semibold border-2 border-blue-500 text-blue-400 hover:bg-blue-500/10 transition-all flex items-center gap-3 text-lg">
+            <a href="www.linkedin.com/in/joy-ndabari-36897a165" target="_blank" rel="noopener noreferrer" className="px-8 py-4 rounded-full font-semibold border-2 border-blue-500 text-blue-400 hover:bg-blue-500/10 transition-all flex items-center gap-3 text-lg">
               <Linkedin size={24} />
               LinkedIn
             </a>
@@ -645,23 +668,21 @@ const Portfolio = () => {
           
           <div className="flex items-center justify-center gap-6 text-slate-400">
             <div className="flex items-center gap-2">
-              <span>📱</span>
+              <span></span>
               <span>+254 706 025 696</span>
             </div>
             <div className="hidden sm:block h-6 w-px bg-slate-700"></div>
             <div className="flex items-center gap-2">
-              <span>📱</span>
+              <span></span>
               <span>+254 727 834 901</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="py-8 border-t border-slate-800">
         <div className="max-w-6xl mx-auto px-6 text-center text-slate-400">
-          <p className="orbitron">© 2025 Ndabari Joy Wairimu. Built with React & Tailwind CSS.</p>
-          <p className="mt-2 text-sm">Designed for excellence. Coded with passion.</p>
+          <p className="orbitron">© 2025  Joy Ndabari . </p>
         </div>
       </footer>
     </div>
