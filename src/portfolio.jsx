@@ -325,7 +325,7 @@ const Portfolio = () => {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="orbitron text-2xl font-bold gradient-text">
-              JOY NDABARI
+              NJ
             </div>
             
             {/* Desktop Navigation */}
@@ -461,7 +461,7 @@ const Portfolio = () => {
                 <span>ndabari79@gmail.com</span>
               </div>
               <div className="flex items-center gap-2 text-slate-400">
-                <span className="text-blue-400">📱</span>
+                <span className="text-blue-400">| </span>
                 <span>+254 706 025 696</span>
               </div>
             </div>

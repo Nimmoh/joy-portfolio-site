@@ -2,13 +2,12 @@
   "name": "joy-portfolio-site",
   "version": "1.0.0",
   "type": "module",
-
   "private": true,
   "description": "Professional portfolio website for Ndabari Joy Wairimu",
   "dependencies": {
+    "lucide-react": "^0.263.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "lucide-react": "^0.263.1"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.0",
