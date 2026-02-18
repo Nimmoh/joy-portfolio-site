@@ -116,7 +116,7 @@ const Portfolio = () => {
   ];
 
   const filteredProjects = tab === 'all' ? projects : projects.filter(p => p.cat === tab);
-  const navLinks = ['services','clients','work','about','experience','contact'];
+  const navLinks = ['services','clients','projects','about','experience','contact'];
 
   return (
     <div style={{ fontFamily:"'Inter', 'DM Sans', sans-serif", background:C.bg, color:C.text, minHeight:'100vh', overflowX:'hidden' }}>
@@ -289,7 +289,7 @@ const Portfolio = () => {
                 {l === 'clients' ? 'Client Work' : l}
               </button>
             ))}
-            <a href="mailto:ndabari79@gmail.com" className="btn-p" style={{ marginTop:'.85rem', width:'100%', justifyContent:'center' }}>Hire Me</a>
+            {/* <a href="mailto:ndabari79@gmail.com" className="btn-p" style={{ marginTop:'.85rem', width:'100%', justifyContent:'center' }}>Hire Me</a> */}
           </div>
         )}
       </nav>
