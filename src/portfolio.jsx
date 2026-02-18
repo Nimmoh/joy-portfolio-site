@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Linkedin, Github, Menu, X, ExternalLink, Code, Database, Smartphone, ChevronRight, ArrowRight, ShoppingCart, Globe, CheckCircle, Phone, Users, MessageCircle, Star, Network } from 'lucide-react';
 
-// ── Colour tokens
+// ── Minimal Professional Color Scheme
 const C = {
-  bg: '#FFFFFF', bgAlt: '#F7F8FC', border: '#E8EAF0',
-  text: '#111318', mid: '#52596B', light: '#9BA3B5',
-  accent: '#0D9E99', accentBg: '#F0FDFB', accentBorder: '#CCFAF5',
+  bg: '#FAFBFC',
+  bgAlt: '#FFFFFF',
+  border: '#E1E4E8',
+  borderLight: '#F0F2F5',
+  text: '#24292E',
+  mid: '#586069',
+  light: '#6A737D',
+  accent: '#2188FF',
+  accentDark: '#0366D6',
+  accentLight: '#EAF5FF',
+  success: '#28A745',
+  successLight: '#E6F9EC',
 };
 
 const Portfolio = () => {
@@ -17,7 +26,7 @@ const Portfolio = () => {
   useEffect(() => {
     const fn = () => {
       setScrolled(window.scrollY > 40);
-      for (const s of ['home','services','clients','work','about','experience','contact']) {
+      for (const s of ['home','services','clients','work','about','experience','pricing','contact']) {
         const el = document.getElementById(s);
         if (el) { const r = el.getBoundingClientRect(); if (r.top <= 100 && r.bottom >= 100) { setActive(s); break; } }
       }
@@ -32,7 +41,7 @@ const Portfolio = () => {
   const services = [
     { color:'#0D9E99', bg:'#F0FDFB', title:'E-commerce', points:['Product catalogs & cart','MPesa / payment gateways','Inventory & order tracking','Mobile-first design'] },
     { color:'#6366F1', bg:'#F5F3FF', title:'Business Websites & Web Apps', points:['Responsive & SEO-ready','Service booking systems','Admin dashboards','Contact & inquiry forms'] },
-    {  color:'#EF4444', bg:'#FFF5F5', title:'Mobile Apps (Flutter)', points:['iOS & Android (Flutter)','API & payment integration','POS & inventory apps','Offline capability'] },
+    {  color:'#EF4444', bg:'#FFF5F5', title:'Mobile App Development', points:['iOS & Android (Flutter)','API & payment integration','POS & inventory apps','Offline capability'] },
     // { icon: <Database size={20}/>, color:'#D97706', bg:'#FFFBEB', title:'Backend & APIs', points:['RESTful API design','JWT auth & security','MongoDB & SQL','Third-party integrations'] },
   ];
 
@@ -107,6 +116,7 @@ const Portfolio = () => {
   const experience = [
     { company:'DUKAKIT', title:'Flutter Developer & Customer Support',
       points:['Built & maintained POS mobile app using Flutter','Resolved user issues and guided clients on usage','Gathered feedback to improve app functionality','Trained business owners on POS operations'] },
+      
     { company:'WEBINC TECHNOLOGIES', title:'Junior Developer & Digital Marketer',
       points:['Built backend services with Node.js & Express.js','Developed & tested RESTful APIs','Implemented SEO strategies to boost digital presence','Managed digital marketing campaigns'] },
     { company:'VIEWTECH LIMITED',  title:'Junior Mobile Developer & System Support',
@@ -116,99 +126,204 @@ const Portfolio = () => {
   ];
 
   const filteredProjects = tab === 'all' ? projects : projects.filter(p => p.cat === tab);
-  const navLinks = ['services','clients','projects','about','experience','contact'];
+  const navLinks = ['services','clients','projects','about','experience','pricing','contact'];
+
+  // Pricing packages
+  const pricing = [
+    {
+      category: 'Landing Page / Portfolio',
+      price: 'KES 15,000 - 20,000',
+      duration: '3-5 days',
+      features: [
+        'Single page responsive design',
+        'Contact form integration',
+        'Basic SEO setup',
+        'Mobile optimization',
+        'Hosting setup assistance'
+      ]
+    },
+    {
+      category: 'Business Website',
+      price: 'KES 35,000 - 60,000',
+      duration: '1-2 weeks',
+      features: [
+        '5-10 pages (Home, About, Services, etc.)',
+        'Content Management System (CMS)',
+        'Contact forms & email integration',
+        'SEO optimization',
+        'Google Analytics setup',
+        'Social media integration',
+        '3 months support'
+      ],
+      popular: true
+    },
+    {
+      category: 'E-commerce Platform',
+      price: 'KES 50,000 - 150,000',
+      duration: '3-6 weeks',
+      features: [
+        'Product catalog & management',
+        'Shopping cart & checkout',
+        'M-Pesa/Payment gateway integration',
+        'Order tracking system',
+        'Admin dashboard',
+        'Inventory management',
+        'Customer accounts',
+        'Email notifications',
+        '6 months support'
+      ]
+    },
+    // {
+    //   category: 'Mobile App (Flutter)',
+    //   price: 'KES 100,000 - 300,000',
+    //   duration: '4-8 weeks',
+    //   features: [
+    //     'iOS & Android apps',
+    //     'Custom UI/UX design',
+    //     'API integration',
+    //     'Push notifications',
+    //     'Offline functionality',
+    //     'Payment integration',
+    //     'Admin panel',
+    //     'App store deployment',
+    //     '6 months support'
+    //   ]
+    // },
+    {
+      category: 'Custom Web Application',
+      price: 'KES 150,000+',
+      duration: '6-12 weeks',
+      features: [
+        'Custom features & functionality',
+        'Database design & setup',
+        'User authentication & roles',
+        'API development',
+        'Third-party integrations',
+        'Admin dashboard',
+        'Scalable architecture',
+        '12 months support'
+      ]
+    }
+  ];
 
   return (
-    <div style={{ fontFamily:"'Inter', 'DM Sans', sans-serif", background:C.bg, color:C.text, minHeight:'100vh', overflowX:'hidden' }}>
+    <div style={{ fontFamily:"'Inter', sans-serif", background:C.bg, color:C.text, minHeight:'100vh', overflowX:'hidden' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,600;1,400&family=Space+Mono:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
         * { margin:0; padding:0; box-sizing:border-box; }
-        ::-webkit-scrollbar { width:3px; } ::-webkit-scrollbar-thumb { background:#0D9E99; border-radius:2px; }
-        .serif { font-family:'Lora',serif; }
-        .mono  { font-family:'Space Mono',monospace; }
+        ::-webkit-scrollbar { width:8px; } 
+        ::-webkit-scrollbar-track { background:#F0F2F5; }
+        ::-webkit-scrollbar-thumb { background:#2188FF; border-radius:4px; }
+        ::-webkit-scrollbar-thumb:hover { background:#0366D6; }
+        .mono { font-family:'JetBrains Mono',monospace; }
 
         nav { position:fixed; top:0; left:0; right:0; z-index:100; transition:all .3s; }
-        .scrolled { background:rgba(255,255,255,.97); backdrop-filter:blur(12px); border-bottom:1px solid #E8EAF0; box-shadow:0 1px 8px rgba(0,0,0,.05); }
-        .nb { background:none; border:none; font-size:.82rem; font-weight:500; color:#6B7280; cursor:pointer; padding:.25rem 0; position:relative; transition:color .2s; }
-        .nb::after { content:''; position:absolute; bottom:-1px; left:0; width:0; height:1.5px; background:#0D9E99; transition:width .3s; border-radius:2px; }
-        .nb:hover,.nb.on { color:#111318; }
+        .scrolled { background:rgba(255,255,255,.98); backdrop-filter:blur(10px); border-bottom:1px solid ${C.border}; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+        .nb { background:none; border:none; font-size:.875rem; font-weight:500; color:${C.mid}; cursor:pointer; padding:.5rem 0; position:relative; transition:color .2s; }
+        .nb::after { content:''; position:absolute; bottom:0; left:0; width:0; height:2px; background:${C.accent}; transition:width .3s; }
+        .nb:hover,.nb.on { color:${C.text}; }
         .nb:hover::after,.nb.on::after { width:100%; }
 
-        .btn-p { background:#0D9E99; color:#fff; font-weight:600; font-size:.85rem; padding:.6rem 1.4rem; border-radius:6px; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; transition:all .2s; }
-        .btn-p:hover { background:#0B8A85; box-shadow:0 4px 16px rgba(13,158,153,.25); transform:translateY(-1px); }
-        .btn-o { background:transparent; color:#111318; font-weight:500; font-size:.85rem; padding:.58rem 1.4rem; border-radius:6px; border:1.5px solid #D1D5DB; cursor:pointer; display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; transition:all .2s; }
-        .btn-o:hover { border-color:#0D9E99; color:#0D9E99; transform:translateY(-1px); }
+        .btn-p { background:${C.accent}; color:#fff; font-weight:600; font-size:.875rem; padding:.65rem 1.5rem; border-radius:6px; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:.5rem; text-decoration:none; transition:all .2s; }
+        .btn-p:hover { background:${C.accentDark}; transform:translateY(-1px); box-shadow:0 4px 12px rgba(33,136,255,.25); }
+        .btn-o { background:transparent; color:${C.text}; font-weight:500; font-size:.875rem; padding:.6rem 1.5rem; border-radius:6px; border:1px solid ${C.border}; cursor:pointer; display:inline-flex; align-items:center; gap:.5rem; text-decoration:none; transition:all .2s; }
+        .btn-o:hover { border-color:${C.accent}; color:${C.accent}; }
 
-        .sec { padding:4rem 1.5rem; }
-        .sec-alt { background:#F7F8FC; }
-        .wrap { max-width:1140px; margin:0 auto; }
-        .divider { height:1px; background:#E8EAF0; }
-        .slabel { font-family:'Space Mono',monospace; font-size:.63rem; letter-spacing:.18em; color:#0D9E99; text-transform:uppercase; font-weight:700; margin-bottom:.5rem; }
-        .sh { font-family:'Lora',serif; font-size:clamp(1.5rem,3vw,2.1rem); font-weight:600; color:#111318; margin-bottom:1.75rem; }
+        .sec { padding:5rem 1.5rem; }
+        .sec-alt { background:${C.bgAlt}; }
+        .wrap { max-width:1100px; margin:0 auto; }
+        .divider { height:1px; background:${C.borderLight}; margin:3rem 0; }
+        .slabel { font-family:'JetBrains Mono',monospace; font-size:.75rem; letter-spacing:.1em; color:${C.accent}; text-transform:uppercase; font-weight:600; margin-bottom:.75rem; }
+        .sh { font-size:clamp(1.75rem,3vw,2.5rem); font-weight:700; color:${C.text}; margin-bottom:1rem; line-height:1.2; }
 
-        /* service cards — horizontal list feel */
-        .svc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:.85rem; }
-        .svc-card { background:#fff; border:1.5px solid #E8EAF0; border-radius:10px; padding:1.25rem 1.25rem 1.4rem; transition:all .25s; }
-        .svc-card:hover { border-color:#C7D2F8; box-shadow:0 4px 18px rgba(0,0,0,.07); transform:translateY(-2px); }
+        /* Minimal list-based services */
+        .svc-list { display:flex; flex-direction:column; gap:1.5rem; }
+        .svc-item { padding:1.5rem 0; border-bottom:1px solid ${C.borderLight}; transition:all .2s; }
+        .svc-item:last-child { border-bottom:none; }
+        .svc-item:hover { padding-left:.5rem; }
 
-        /* client cards — compact */
-        .cli-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1rem; }
-        .cli-card { background:#fff; border:1.5px solid #E8EAF0; border-radius:10px; overflow:hidden; transition:all .25s; }
-        .cli-card:hover { border-color:#CBD5E1; box-shadow:0 6px 22px rgba(0,0,0,.09); transform:translateY(-2px); }
+        /* Clean client cards */
+        .cli-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:1.5rem; }
+        .cli-card { background:${C.bgAlt}; border:1px solid ${C.border}; border-radius:8px; padding:1.75rem; transition:all .25s; }
+        .cli-card:hover { border-color:${C.accent}; box-shadow:0 4px 12px rgba(0,0,0,.06); }
 
-        /* project cards */
-        .prj-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:.85rem; }
-        .prj-card { background:#fff; border:1.5px solid #E8EAF0; border-radius:10px; overflow:hidden; transition:all .25s; }
-        .prj-card:hover { border-color:#C7D2F8; box-shadow:0 4px 18px rgba(0,0,0,.07); transform:translateY(-2px); }
+        /* Minimal project cards */
+        .prj-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; }
+        .prj-card { background:${C.bgAlt}; border:1px solid ${C.border}; border-radius:8px; padding:1.5rem; transition:all .25s; }
+        .prj-card:hover { border-color:${C.accent}; box-shadow:0 4px 12px rgba(0,0,0,.06); }
 
-        .chip { font-size:.68rem; padding:.18rem .52rem; border-radius:4px; font-weight:500; }
-        .tech-chip { background:#F3F4F6; border:1px solid #E5E7EB; color:#52596B; font-size:.67rem; padding:.15rem .45rem; border-radius:3px; }
+        .chip { font-size:.75rem; padding:.25rem .65rem; border-radius:4px; font-weight:500; }
+        .tech-chip { background:${C.borderLight}; color:${C.mid}; font-size:.75rem; padding:.3rem .65rem; border-radius:4px; }
 
-        .pill { background:#F3F4F6; border:1px solid #E5E7EB; padding:.28rem .75rem; border-radius:100px; font-size:.75rem; color:#374151; transition:all .18s; display:inline-block; }
-        .pill:hover { background:#E6FAF9; border-color:#0D9E99; color:#0D9E99; }
+        .pill { background:${C.borderLight}; padding:.35rem .85rem; border-radius:20px; font-size:.8rem; color:${C.mid}; transition:all .2s; display:inline-block; }
+        .pill:hover { background:${C.accentLight}; color:${C.accent}; }
 
-        .clink { display:flex; align-items:center; gap:.85rem; padding:.85rem 1rem; background:#F7F8FC; border:1.5px solid #E8EAF0; border-radius:8px; color:#111318; text-decoration:none; transition:all .2s; }
-        .clink:hover { border-color:#0D9E99; background:#F0FDFB; transform:translateX(3px); }
+        .clink { display:flex; align-items:center; gap:1rem; padding:1rem; background:${C.bgAlt}; border:1px solid ${C.border}; border-radius:6px; color:${C.text}; text-decoration:none; transition:all .2s; }
+        .clink:hover { border-color:${C.accent}; background:${C.accentLight}; }
 
-        .live-dot { width:6px; height:6px; border-radius:50%; background:#10B981; display:inline-block; animation:lp 2s infinite; }
-        @keyframes lp { 0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.4)} 50%{box-shadow:0 0 0 4px rgba(16,185,129,0)} }
-        .collab-b { display:inline-flex; align-items:center; gap:.3rem; background:#EEF2FF; border:1px solid #C7D2F8; border-radius:100px; padding:.2rem .6rem; font-size:.66rem; font-weight:600; color:#4F46E5; }
+        .live-dot { width:8px; height:8px; border-radius:50%; background:${C.success}; display:inline-block; animation:pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
 
-        .tab-b { padding:.38rem 1rem; border-radius:100px; font-size:.78rem; font-weight:500; border:1.5px solid #E4E7EF; background:#fff; color:#6B7280; cursor:pointer; transition:all .18s; }
-        .tab-b.on,.tab-b:hover { background:#E6FAF9; border-color:#0D9E99; color:#0D9E99; }
+        .tab-b { padding:.5rem 1.25rem; border-radius:6px; font-size:.875rem; font-weight:500; border:1px solid ${C.border}; background:${C.bgAlt}; color:${C.mid}; cursor:pointer; transition:all .2s; }
+        .tab-b.on,.tab-b:hover { background:${C.accentLight}; border-color:${C.accent}; color:${C.accent}; }
 
-        .exp-row { display:grid; grid-template-columns:160px 1fr; gap:1.5rem; padding:1.5rem 0; border-bottom:1px solid #E8EAF0; }
-        .exp-row:last-child { border-bottom:none; }
+        /* Clean experience timeline */
+        .exp-list { display:flex; flex-direction:column; gap:2.5rem; }
+        .exp-item { 
+          padding:1.75rem 0 1.75rem 2rem; 
+          border-left:3px solid ${C.borderLight}; 
+          position:relative;
+          transition: all 0.2s ease;
+        }
+        .exp-item:hover {
+          border-left-color: ${C.accent};
+        }
+        .exp-item::before { 
+          content:''; 
+          position:absolute; 
+          left:-7px; 
+          top:2rem; 
+          width:11px; 
+          height:11px; 
+          border-radius:50%; 
+          background:${C.bgAlt}; 
+          border:3px solid ${C.accent};
+          transition: all 0.2s ease;
+        }
+        .exp-item:hover::before {
+          transform: scale(1.2);
+          box-shadow: 0 0 0 4px ${C.accentLight};
+        }
 
-        @keyframes up { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
-        .a0{animation:up .6s ease-out forwards}
-        .a1{animation:up .6s .08s ease-out forwards;opacity:0}
-        .a2{animation:up .6s .16s ease-out forwards;opacity:0}
-        .a3{animation:up .6s .24s ease-out forwards;opacity:0}
-        .a4{animation:up .6s .32s ease-out forwards;opacity:0}
+        @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+        .a0{animation:fadeUp .5s ease-out forwards}
+        .a1{animation:fadeUp .5s .1s ease-out forwards;opacity:0}
+        .a2{animation:fadeUp .5s .2s ease-out forwards;opacity:0}
+        .a3{animation:fadeUp .5s .3s ease-out forwards;opacity:0}
+        .a4{animation:fadeUp .5s .4s ease-out forwards;opacity:0}
 
         @media(max-width:768px){
           .dn{display:none!important} .ds{display:block!important}
-          .exp-row{grid-template-columns:1fr;gap:.25rem}
-          .about-grid{grid-template-columns:1fr!important}
-          .contact-grid{grid-template-columns:1fr!important}
+          .exp-item { padding-left:1.5rem; }
+          .exp-item::before { left:-6px; }
+          .sec { padding:3rem 1.5rem; }
         }
         @media(min-width:769px){.ds{display:none!important}}
 
-        /* WhatsApp Floating Button */
+        /* WhatsApp & Email Floating Buttons */
         .whatsapp-float {
           position: fixed;
           bottom: 25px;
           right: 25px;
           background: #25D366;
           color: white;
-          width: 60px;
-          height: 60px;
+          width: 56px;
+          height: 56px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+          box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
           cursor: pointer;
           z-index: 1000;
           transition: all 0.3s ease;
@@ -217,60 +332,59 @@ const Portfolio = () => {
         .whatsapp-float:hover {
           background: #20BA5A;
           transform: scale(1.1);
-          box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
-        }
-        .whatsapp-float svg {
-          width: 32px;
-          height: 32px;
+          box-shadow: 0 6px 24px rgba(37, 211, 102, 0.5);
         }
 
-        /* Email Floating Button */
         .email-float {
           position: fixed;
-          bottom: 95px;
+          bottom: 90px;
           right: 25px;
-          background: #0D9E99;
+          background: ${C.accent};
           color: white;
-          width: 60px;
-          height: 60px;
+          width: 56px;
+          height: 56px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 4px 20px rgba(13, 158, 153, 0.4);
+          box-shadow: 0 4px 16px rgba(33, 136, 255, 0.3);
           cursor: pointer;
           z-index: 1000;
           transition: all 0.3s ease;
           border: none;
         }
         .email-float:hover {
-          background: #0B8A85;
+          background: ${C.accentDark};
           transform: scale(1.1);
-          box-shadow: 0 6px 30px rgba(13, 158, 153, 0.6);
+          box-shadow: 0 6px 24px rgba(33, 136, 255, 0.5);
         }
 
         @media(max-width:768px){
-          .whatsapp-float, .email-float {
-            width: 50px;
-            height: 50px;
-          }
-          .whatsapp-float svg {
-            width: 26px;
-            height: 26px;
-          }
-          .email-float {
-            bottom: 85px;
-          }
+          .whatsapp-float, .email-float { width: 48px; height: 48px; }
+          .email-float { bottom: 80px; }
         }
       `}</style>
 
       {/* NAV */}
       <nav className={scrolled ? 'scrolled' : ''} style={{ background: scrolled ? undefined : 'rgba(255,255,255,0)' }}>
         <div className="wrap" style={{ padding:'.85rem 1.5rem', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-          <div style={{ display:'flex', alignItems:'center', gap:'.5rem' }}>
-            <span className="mono" style={{ fontSize:'.9rem', color:'#0D9E99' }}>Joy Ndabari</span>
-            <span style={{ width:1, height:14, background:'#D1D5DB', display:'inline-block' }} />
-            <span style={{ fontSize:'.75rem', color:C.light, fontWeight:500 }}>Sofware Developer</span>
+          <div style={{ display:'flex', alignItems:'center', gap:'.65rem' }}>
+            <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="38" height="38" rx="9" fill="url(#logoGradient)"/>
+              <path d="M11 25V13H13.5V20.2L19.5 13H22V25H19.5V17.8L13.5 25H11Z" fill="white" fillOpacity="0.98"/>
+              <circle cx="26.5" cy="19" r="2.8" fill="white" fillOpacity="0.98"/>
+              <path d="M26.5 13V15.2" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.7"/>
+              <defs>
+                <linearGradient id="logoGradient" x1="0" y1="0" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#2188FF"/>
+                  <stop offset="1" stopColor="#0366D6"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div style={{ display:'flex', flexDirection:'column', gap:'0.05rem' }}>
+              <span className="mono" style={{ fontSize:'.88rem', color:C.text, fontWeight:600, lineHeight:1 }}>Joy Ndabari</span>
+              <span style={{ fontSize:'.68rem', color:C.light, fontWeight:500, lineHeight:1 }}>Software Developer</span>
+            </div>
           </div>
           <div className="dn" style={{ display:'flex', alignItems:'center', gap:'2rem' }}>
             {navLinks.map(l => (
@@ -295,46 +409,30 @@ const Portfolio = () => {
       </nav>
 
       {/* HERO */}
-      <section id="home" style={{ background:'linear-gradient(155deg,#F0FDFB 0%,#F7F8FC 50%,#fff 100%)', padding:'7.5rem 1.5rem 4.5rem', position:'relative', overflow:'hidden' }}>
-        <div style={{ position:'absolute', top:-100, right:-100, width:420, height:420, borderRadius:'50%', background:'radial-gradient(circle,rgba(13,158,153,.07) 0%,transparent 70%)', pointerEvents:'none' }} />
+      <section id="home" style={{ background:C.bgAlt, padding:'8rem 1.5rem 5rem', position:'relative', borderBottom:`1px solid ${C.borderLight}` }}>
         <div className="wrap">
-          <div style={{ maxWidth:620 }}>
-            <div className="slabel a0" style={{ display:'flex', alignItems:'center', gap:'.45rem', marginBottom:'1rem' }}>
-              <span className="live-dot" />Available for projects · Nairobi
+          <div style={{ maxWidth:680 }}>
+            <div className="slabel a0" style={{ display:'flex', alignItems:'center', gap:'.5rem', marginBottom:'1.25rem' }}>
+              <span className="live-dot" />Available for projects
             </div>
-            <h1 className="serif a1" style={{ fontSize:'clamp(2.2rem,5.5vw,3.9rem)', lineHeight:1.12, marginBottom:'1.1rem', fontWeight:600 }}>
-              <span style={{ color:'#0D9E99' }}>Building Solutions</span>{' '}
-              <span style={{ fontStyle:'italic', fontWeight:400 }}>that grow businesses.</span>
+            <h1 className="a1" style={{ fontSize:'clamp(2.5rem,6vw,4rem)', lineHeight:1.15, marginBottom:'1.25rem', fontWeight:700, color:C.text }}>
+              Building digital solutions that drive business growth
             </h1>
-            <p className="a2" style={{ fontSize:'1rem', color:C.mid, lineHeight:1.75, maxWidth:480, marginBottom:'1.75rem' }}>
-              Software developer specializing in e-commerce platforms, business web apps, and mobile solutions. 
+            <p className="a2" style={{ fontSize:'1.125rem', color:C.mid, lineHeight:1.7, maxWidth:560, marginBottom:'2rem' }}>
+              Software developer & IT Enthusiast specializing in e-commerce platforms, business web applications, and mobile solutions. Based in Nairobi.
             </p>
-            <div className="a3" style={{ display:'flex', gap:'.75rem', flexWrap:'wrap', marginBottom:'2.75rem' }}>
+            <div className="a3" style={{ display:'flex', gap:'.85rem', flexWrap:'wrap' }}>
               <a href="https://wa.me/254706025696?text=Hi%20Joy,%20I%27d%20like%20to%20discuss%20a%20project" target="_blank" rel="noopener noreferrer" className="btn-p" style={{ background:'#25D366' }}>
-                <MessageCircle size={14}/>WhatsApp Me
+                <MessageCircle size={16}/>WhatsApp Me
               </a>
               <a href="mailto:ndabari79@gmail.com" className="btn-o">
-                <Mail size={14}/>Email Me
+                <Mail size={16}/>Email Me
               </a>
-              {/* <button onClick={() => go('clients')} className="btn-o">View work</button> */}
+              {/* <button onClick={() => go('projects')} className="btn-o">View Projects</button> */}
             </div>
-            {/* <div className="a4" style={{ display:'flex', gap:'.85rem', flexWrap:'wrap' }}>
-              {[
-                { n:'3+', l:'Years experience', c:'#0D9E99' },
-                { n:'20+', l:'Projects delivered', c:'#6366F1' },
-                { n:'5+', l:'Live client sites', c:'#10B981' },
-              ].map((s,i) => (
-                <div key={i} style={{ textAlign:'center', padding:'.9rem 1.4rem', background:'#fff', border:`1.5px solid ${C.border}`, borderRadius:8, flex:'1 1 100px' }}>
-                  <div style={{ fontFamily:"'Lora',serif", fontSize:'2rem', fontWeight:600, color:s.c, lineHeight:1 }}>{s.n}</div>
-                  <div style={{ fontSize:'.72rem', color:C.light, marginTop:'.2rem' }}>{s.l}</div>
-                </div>
-              ))}
-            </div> */}
           </div>
         </div>
       </section>
-
-      <div className="divider" />
 
       {/* SERVICES */}
       <section id="services" className="sec">
@@ -389,7 +487,7 @@ const Portfolio = () => {
                   {/* highlights */}
                   <div style={{ display:'flex', flexWrap:'wrap', gap:'.3rem', marginBottom:'.75rem' }}>
                     {p.highlights.map((h,hi) => (
-                      <span key={hi} className="chip" style={{ background:p.bg, border:`1px solid ${p.color}25`, color:p.color }}>✓ {h}</span>
+                      <span key={hi} className="chip" style={{ background:p.bg, border:`1px solid ${p.color}25`, color:p.color }}>{h}</span>
                     ))}
                   </div>
 
@@ -508,27 +606,149 @@ const Portfolio = () => {
       <section id="experience" className="sec">
         <div className="wrap">
           <div className="slabel">Career</div>
-          <div className="sh">Professional experience</div>
-          {experience.map((e,i) => (
-            <div key={i} className="exp-row">
-              <div style={{ paddingTop:'.1rem' }}>
-                <div style={{ display:'flex', alignItems:'center', gap:'.45rem' }}>
-                  <div style={{ width:9, height:9, borderRadius:'50%', background:e.dot, flexShrink:0 }} />
-                  <span style={{ fontSize:'.78rem', fontWeight:700, color:C.text }}>{e.company}</span>
+          <div className="sh">Professional Experience</div>
+          <div className="exp-list">
+            {experience.map((e,i) => (
+              <div key={i} className="exp-item">
+                <div style={{ display:'flex', alignItems:'center', gap:'.6rem', marginBottom:'.85rem' }}>
+                  <div style={{ width:10, height:10, borderRadius:'50%', background:e.dot, flexShrink:0 }} />
+                  <span style={{ fontSize:'.85rem', fontWeight:700, color:C.text, letterSpacing:'.02em' }}>{e.company}</span>
                 </div>
-              </div>
-              <div>
-                <div style={{ fontSize:'.95rem', fontWeight:700, color:C.text, marginBottom:'.6rem' }}>{e.title}</div>
-                <div style={{ display:'flex', flexDirection:'column', gap:'.32rem' }}>
+                <h3 style={{ fontSize:'1.125rem', fontWeight:600, color:C.text, marginBottom:'1rem', lineHeight:1.4 }}>
+                  {e.title}
+                </h3>
+                <ul style={{ display:'flex', flexDirection:'column', gap:'.65rem', paddingLeft:0, listStyle:'none' }}>
                   {e.points.map((pt,pi) => (
-                    <div key={pi} style={{ display:'flex', gap:'.55rem', alignItems:'flex-start', fontSize:'.83rem', color:C.mid, lineHeight:1.6 }}>
-                     <span>{pt}</span>
-                    </div>
+                    <li key={pi} style={{ fontSize:'.9375rem', color:C.mid, lineHeight:1.65, paddingLeft:'1.25rem', position:'relative' }}>
+                      <span style={{ position:'absolute', left:0, color:C.accent, fontWeight:600 }}>•</span>
+                      {pt}
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="divider" />
+
+      {/* PRICING */}
+      <section id="pricing" className="sec">
+        <div className="wrap">
+          <div className="slabel">Investment</div>
+          <div className="sh"> Pricing</div>
+          <p style={{ fontSize:'1rem', color:C.mid, lineHeight:1.7, maxWidth:680, marginBottom:'3rem' }}>
+             Final pricing depends on specific requirements, complexity, and timeline. All prices include initial consultation and project planning.
+          </p>
+          
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(300px, 1fr))', gap:'1.5rem' }}>
+            {pricing.map((pkg, i) => (
+              <div 
+                key={i} 
+                style={{ 
+                  background: pkg.popular ? C.accentLight : C.bgAlt,
+                  border: `2px solid ${pkg.popular ? C.accent : C.border}`,
+                  borderRadius: '8px',
+                  padding: '2rem',
+                  position: 'relative',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = C.accent;
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(33, 136, 255, 0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = pkg.popular ? C.accent : C.border;
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                {pkg.popular && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '-12px',
+                    right: '20px',
+                    background: C.accent,
+                    color: 'white',
+                    padding: '.35rem .85rem',
+                    borderRadius: '20px',
+                    fontSize: '.75rem',
+                    fontWeight: 600
+                  }}>
+                    Most Popular
+                  </div>
+                )}
+                
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: C.text, marginBottom: '.75rem' }}>
+                  {pkg.category}
+                </h3>
+                
+                <div style={{ marginBottom: '1rem' }}>
+                  <div style={{ fontSize: '1.75rem', fontWeight: 700, color: C.accent, marginBottom: '.25rem' }}>
+                    {pkg.price}
+                  </div>
+                  <div style={{ fontSize: '.875rem', color: C.mid }}>
+                    ⏱️ {pkg.duration}
+                  </div>
+                </div>
+                
+                <div style={{ borderTop: `1px solid ${C.borderLight}`, paddingTop: '1.25rem' }}>
+                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '.65rem', listStyle: 'none', padding: 0 }}>
+                    {pkg.features.map((feature, fi) => (
+                      <li key={fi} style={{ display: 'flex', alignItems: 'flex-start', gap: '.5rem', fontSize: '.9rem', color: C.mid, lineHeight: 1.6 }}>
+                        <span style={{ color: C.accent, fontSize: '.85rem', flexShrink: 0, fontWeight: 600 }}>•</span>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <a 
+                  href={`https://wa.me/254706025696?text=Hi%20Joy,%20I'm%20interested%20in%20the%20${encodeURIComponent(pkg.category)}%20package`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-p"
+                  style={{ 
+                    width: '100%', 
+                    justifyContent: 'center', 
+                    marginTop: '1.5rem',
+                    background: pkg.popular ? C.accent : C.bgAlt,
+                    color: pkg.popular ? 'white' : C.accent,
+                    border: pkg.popular ? 'none' : `1px solid ${C.accent}`
+                  }}
+                >
+                  Get Quote
+                </a>
+              </div>
+            ))}
+          </div>
+          
+          <div style={{ 
+            marginTop: '3rem', 
+            padding: '1.75rem', 
+            background: C.bgAlt, 
+            border: `1px solid ${C.border}`, 
+            borderRadius: '8px',
+            borderLeft: `4px solid ${C.accent}`
+          }}>
+            <h4 style={{ fontSize: '1rem', fontWeight: 600, color: C.text, marginBottom: '.75rem', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
+              Additional Services
+            </h4>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', fontSize: '.9rem', color: C.mid }}>
+              <div>• <strong>Maintenance:</strong> KES 5,000 - 15,000/month</div>
+              <div>• <strong>Domain & Hosting:</strong> KES 3,000 - 8,000/year</div>
+              <div>• <strong>API Integration:</strong> KES 15,000 - 50,000</div>
+              <div>• <strong>Payment Gateway:</strong> KES 20,000 - 40,000</div>
+              <div>• <strong>Training & Documentation:</strong> KES 5,000</div>
+              <div>• <strong>Rush Delivery:</strong> 30% of project cost</div>
             </div>
-          ))}
+          </div>
+          
+          <p style={{ fontSize: '.875rem', color: C.light, textAlign: 'center', marginTop: '2rem', fontStyle: 'italic' }}>
+            * Prices are estimates and may vary based on project scope. Contact me for a detailed quote tailored to your needs.
+          </p>
         </div>
       </section>
 

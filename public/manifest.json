@@ -1,0 +1,17 @@
+{
+  "name": "Joy Ndabari - Software Developer",
+  "short_name": "Joy Ndabari",
+  "description": "Full-Stack Developer & IT Specialist specializing in e-commerce platforms, business web apps, and mobile solutions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFBFC",
+  "theme_color": "#2188FF",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
