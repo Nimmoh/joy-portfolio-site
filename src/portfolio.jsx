@@ -1,690 +1,621 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Linkedin, Github, Menu, X, ExternalLink, Code, Database, Smartphone, Network, ChevronRight, Star, GitFork } from 'lucide-react';
+import { Mail, Linkedin, Github, Menu, X, ExternalLink, Code, Database, Smartphone, ChevronRight, ArrowRight, ShoppingCart, Globe, CheckCircle, Phone, Users, MessageCircle, Star, Network } from 'lucide-react';
+
+// ── Colour tokens
+const C = {
+  bg: '#FFFFFF', bgAlt: '#F7F8FC', border: '#E8EAF0',
+  text: '#111318', mid: '#52596B', light: '#9BA3B5',
+  accent: '#0D9E99', accentBg: '#F0FDFB', accentBorder: '#CCFAF5',
+};
 
 const Portfolio = () => {
-  const [activeSection, setActiveSection] = useState('home');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [active, setActive] = useState('home');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [tab, setTab] = useState('all');
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+    const fn = () => {
+      setScrolled(window.scrollY > 40);
+      for (const s of ['home','services','clients','work','about','experience','contact']) {
+        const el = document.getElementById(s);
+        if (el) { const r = el.getBoundingClientRect(); if (r.top <= 100 && r.bottom >= 100) { setActive(s); break; } }
+      }
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', fn);
+    return () => window.removeEventListener('scroll', fn);
   }, []);
 
-  const skills = {
-    backend: ['Node.js', 'Express.js', 'MongoDB', 'SQL', 'Angel Dart', 'RESTful APIs', 'Authentication & Security'],
-    frontend: ['Flutter', 'Dart', 'React.js', 'HTML/CSS', 'JavaScript', 'Responsive Design'],
-    tools: ['Git & GitHub', 'Postman', 'ThunderClient', 'API Testing'],
-    network: ['Network Troubleshooting', 'Routers & Switches', 'Firewalls', 'CRM Systems']
-  };
+  const go = (id) => { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); setActive(id); setMenuOpen(false); };
 
-  const experience = [
+  // ── DATA
+  const services = [
+    { color:'#0D9E99', bg:'#F0FDFB', title:'E-commerce', points:['Product catalogs & cart','MPesa / payment gateways','Inventory & order tracking','Mobile-first design'] },
+    { color:'#6366F1', bg:'#F5F3FF', title:'Business Websites & Web Apps', points:['Responsive & SEO-ready','Service booking systems','Admin dashboards','Contact & inquiry forms'] },
+    {  color:'#EF4444', bg:'#FFF5F5', title:'Mobile Apps (Flutter)', points:['iOS & Android (Flutter)','API & payment integration','POS & inventory apps','Offline capability'] },
+    // { icon: <Database size={20}/>, color:'#D97706', bg:'#FFFBEB', title:'Backend & APIs', points:['RESTful API design','JWT auth & security','MongoDB & SQL','Third-party integrations'] },
+  ];
+
+  const clients = [
     {
-      title: 'Flutter Developer & Customer Support',
-      company: 'DUKAKIT',
-    //   period: 'April 2025 – Present',
-      highlights: [
-        'Built and maintained Dukakit\'s POS mobile app using Flutter',
-        'Handled customer support, resolving user issues and guiding clients',
-        'Gathered user feedback to improve app functionality',
-        'Trained small business owners on POS system usage'
-      ]
+      title:'Allstar Tech', sub:'E-commerce · Computers & Electronics',
+      color:'#0d9488', bg:'#F0FDFA', collab:'Chambu Digital', live:true,
+      role:' Web Development',
+      desc:'Full-stack e-commerce platform with product catalog, advanced filters, Google OAuth, wholesale pricing, and product reviews.',
+      tech:['Next.js 16','TypeScript','Tailwind CSS','MongoDB','Zustand','JWT','Google OAuth'],
+      highlights:['Product catalog & filtering','Google OAuth + JWT','Wholesale pricing','Product reviews','SEO optimized'],
     },
     {
-      title: 'Junior Developer & Digital Marketer',
-      company: 'WEBINC TECHNOLOGIES',
-    //   period: 'December 2024 - Present',
-      highlights: [
-        'Developed and maintained backend services using Node.js & Express.js',
-        'Built and tested RESTful APIs to streamline business operations',
-        'Implemented SEO strategies to improve digital presence',
-        'Assisted in digital marketing campaigns and social media management'
-      ]
+      title:'Electromatt', sub:'Corporate · Electrical Products & Services',
+      color:'#2563EB', bg:'#EFF6FF', collab:'Chambu Digital', live:true, url:'https://www.electromatt.co.ke/',
+      role:'Web Development',
+      desc:'Responsive website with product/service showcase, contact forms, and SEO optimization.',
+      tech:['Next.js','TypeScript','Tailwind CSS'],
+      highlights:['Product & service showcase','Contact & inquiry forms','SEO structure','Fast-loading assets'],
     },
     {
-      title: 'Junior Mobile Developer & System Support',
-      company: 'VIEWTECH LIMITED',
-    //   period: 'January 2024 - November 2024',
-      highlights: [
-        'Built Flutter mobile applications with API integration',
-        'Assisted in network troubleshooting and system integration',
-        'Integrated SasaPay API for digital payment solutions',
-        'Implemented basic authentication and security measures'
-      ]
+      title:'Rhino Linings', sub:'Full-stack · Service Management Platform',
+      color:'#DC2626', bg:'#FFF5F5', collab:null, live:false,
+      role:'Full-stack Development',
+      desc:'Service management system with 3-tier role access (customer / employee / admin), real-time progress tracking, and MPesa STK push payments.',
+      tech:['React 18','Vite','Tailwind','Node.js','Express','MongoDB','JWT','MPesa API'],
+      highlights:['3-tier role-based access','MPesa STK push','Real-time tracking','Admin dashboard'],
     },
-      {
-      title: 'Freelance Developer',
-      highlights: [
-        'As a freelance developer, I design, develop, and deploy digital solutions for individuals, startups, and small businesses. My work focuses on building user-friendly websites, API-powered applications, and mobile apps that improve business operations and customer engagement. I manage full project cycles from requirements gathering and UI/UX planning to development, testing, deployment, and basic client training.'
-      ]
-    }
+    {
+      title:'Cobitec Brands', sub:'Corporate · Multi-brand Website',
+      color:'#7C3AED', bg:'#FAF5FF', collab:null, live:false,
+      role:'Full-stack Development',
+      desc:'Multi-brand corporate website with service pages and B2B-focused design.',
+      tech:['JavaScript','HTML5','CSS3'],
+      highlights:['Multi-brand showcase','B2B design','Responsive layout'],
+      github:'https://github.com/Nimmoh/cobitec-brands',
+    },
+    {
+      title:'Kambove Enterprises',
+      color:'#2563EB', bg:'#EFF6FF', live:true, url:'https://www.kambove.co.ke/',
+      role:'Frontend Development',
+      desc:'Scalable REST API powering business operations and data management with secure, modular architecture.',
+      tech:['Node.js','Express.js','RESTful APIs'],
+      highlights:['Scalable REST API','Secure endpoints','Modular architecture'],
+      github:'https://github.com/Nimmoh/kambove-backend',
+    },
   ];
 
   const projects = [
-    {
-      title: 'WebInc Website',
-      description: 'A professional Node.js backend for handling contact form submissions with email functionality, built with Express.js and structured for scalability.',
-      tech: ['HTML', 'CSS', 'JavaScript' ],
-      category: 'Website',
-      github: 'https://github.com/Nimmoh/webInc',
-      featured: true
-    },
-    {
-      title: 'Portfolio Website',
-      description: 'Personal portfolio website showcasing projects, skills, and professional experience. Built with responsive design and modern web technologies.',
-      tech: ['HTML', 'CSS', 'JavaScript'],
-      category: 'Web',
-      github: 'https://github.com/Nimmoh/joy-porfolio_site',
-      featured: true
-    },
-      {
-      title: 'Construction Website',
-      description: 'Personal portfolio website showcasing projects, skills, and professional experience. Built with responsive design and modern web technologies.',
-      tech: ['HTML', 'CSS', 'JavaScript'],
-      category: 'Web',
-      github: 'https://github.com/Nimmoh/construction-website',
-      featured: true
-    },
-  
-      {
-      title: 'CarWash Management System',
-      description: 'A comprehensive React-based management system for car wash businesses with real-time tracking of services, payments, and expenses.',
-      tech: ['HTML', 'CSS', 'JavaScript'],
-      category: 'Web',
-      github: 'https://github.com/Nimmoh/carwash-management',
-      featured: true
-    },
-     {
-      title: 'E-commerce Website',
-      description: 'A complete e-commerce platform for tiles, terrazzo, and hardware products with advanced features including product visualization, tile calculator, order tracking, and customer account management.',
-      tech: ['HTML', 'CSS', 'JavaScript'],
-      category: 'Web',
-      github: 'https://github.com/Nimmoh/spearmode',
-      featured: true
-    },
-    // {
-    //   title: 'Dukakit POS System',
-    //   description: 'A comprehensive Point of Sale mobile application for small businesses, featuring inventory management, sales tracking, and customer management.',
-    //   tech: ['Flutter', 'Dart', 'API Integration'],
-    //   category: 'Mobile',
-    //   featured: true
-    // },
-    // {
-    //   title: 'RESTful API Services',
-    //   description: 'Backend services and APIs built for various business operations including authentication, data management, and payment processing.',
-    //   tech: ['Node.js', 'Express.js', 'MongoDB'],
-    //   category: 'Backend'
-    // },
-    {
-      title: 'API Integration',
-      description: 'Digital payment solution integration enabling secure mobile money transactions for business applications.',
-      tech: ['Flutter', 'API Integration', 'Security'],
-      category: 'Mobile'
-    },
-    // {
-    //   title: 'Business Web Applications',
-    //   description: 'Full-stack web applications featuring responsive design, API integration, and database management for client business needs.',
-    //   tech: ['React.js', 'Node.js', 'MongoDB'],
-    //   category: 'Full-Stack'
-    // }
-  ];
-
-  const education = [
-    {
-      degree: 'Bachelor of Science in Information Technology',
-      institution: 'Jomo Kenyatta University of Agriculture and Technology',
-    //   period: '2019 - 2023'
-    },
-   
-    {
-      degree: 'Mobile Software Development',
-      institution: 'EMobilis Mobile Technology Institute',
-    //   period: 'February - June 2018'
-    },
+    { title:'Spearmode E-commerce', cat:'ecommerce', tag:'E-commerce', color:'#0D9E99', bg:'#F0FDFB',
+      desc:'Online store for tiles & hardware with an interactive tile calculator, cart, and order tracking.',
+      tech:['HTML5','CSS3','JavaScript'], 
+      results:['Tile calculator','Cart & checkout','Order tracking'],
+      github:'https://github.com/Nimmoh/spearmode' },
+    { title:'CarWash Management', cat:'webapp', tag:'Web App', color:'#6366F1', bg:'#F5F3FF',
+      desc:'Operations platform — service booking, payments, expense tracking, customer DB, and analytics.',
+      tech:['React.js','JavaScript','CSS3'], results:['Booking system','Payment processing','Analytics'],
+      github:'https://github.com/Nimmoh/carwash-management' },
+    { title:'WebInc Corporate Site', cat:'webapp', tag:'Corporate', color:'#6366F1', bg:'#F5F3FF',
+      desc:'Corporate site with Node.js backend, email automation, and SEO-optimised design.',
+      tech:['Node.js','Express.js','HTML5','CSS3'], results:['Email automation','SEO optimized'],
+      github:'https://webinckenyaltd.co.ke/' },
+    { title:'Construction Website', cat:'webapp', tag:'Corporate', color:'#6366F1', bg:'#F5F3FF',
+      desc:'Portfolio site for a construction company with project gallery and contact forms.',
+      tech:['HTML5','CSS3','JavaScript'],
+       results:['Project gallery','Responsive design'],
+      github:'https://github.com/Nimmoh/construction-website' },
+    
     
   ];
 
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(sectionId);
-      setIsMenuOpen(false);
-    }
-  };
+  const experience = [
+    { company:'DUKAKIT', title:'Flutter Developer & Customer Support',
+      points:['Built & maintained POS mobile app using Flutter','Resolved user issues and guided clients on usage','Gathered feedback to improve app functionality','Trained business owners on POS operations'] },
+    { company:'WEBINC TECHNOLOGIES', title:'Junior Developer & Digital Marketer',
+      points:['Built backend services with Node.js & Express.js','Developed & tested RESTful APIs','Implemented SEO strategies to boost digital presence','Managed digital marketing campaigns'] },
+    { company:'VIEWTECH LIMITED',  title:'Junior Mobile Developer & System Support',
+      points:['Built Flutter apps with full API integration','Integrated SasaPay API for digital payments','Implemented JWT auth & security','Assisted in network troubleshooting'] },
+    { company:'FREELANCE',  title:'Independent Developer',
+      points:['Collaborated with Chambu Digital on Electromatt & Allstar Tech','Full project cycles: scoping → development → deployment → handover','E-commerce stores, APIs, and mobile apps for Kenyan SMBs'] },
+  ];
+
+  const filteredProjects = tab === 'all' ? projects : projects.filter(p => p.cat === tab);
+  const navLinks = ['services','clients','work','about','experience','contact'];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-100 font-sans">
+    <div style={{ fontFamily:"'Inter', 'DM Sans', sans-serif", background:C.bg, color:C.text, minHeight:'100vh', overflowX:'hidden' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
-        
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,600;1,400&family=Space+Mono:wght@700&display=swap');
+        * { margin:0; padding:0; box-sizing:border-box; }
+        ::-webkit-scrollbar { width:3px; } ::-webkit-scrollbar-thumb { background:#0D9E99; border-radius:2px; }
+        .serif { font-family:'Lora',serif; }
+        .mono  { font-family:'Space Mono',monospace; }
+
+        nav { position:fixed; top:0; left:0; right:0; z-index:100; transition:all .3s; }
+        .scrolled { background:rgba(255,255,255,.97); backdrop-filter:blur(12px); border-bottom:1px solid #E8EAF0; box-shadow:0 1px 8px rgba(0,0,0,.05); }
+        .nb { background:none; border:none; font-size:.82rem; font-weight:500; color:#6B7280; cursor:pointer; padding:.25rem 0; position:relative; transition:color .2s; }
+        .nb::after { content:''; position:absolute; bottom:-1px; left:0; width:0; height:1.5px; background:#0D9E99; transition:width .3s; border-radius:2px; }
+        .nb:hover,.nb.on { color:#111318; }
+        .nb:hover::after,.nb.on::after { width:100%; }
+
+        .btn-p { background:#0D9E99; color:#fff; font-weight:600; font-size:.85rem; padding:.6rem 1.4rem; border-radius:6px; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; transition:all .2s; }
+        .btn-p:hover { background:#0B8A85; box-shadow:0 4px 16px rgba(13,158,153,.25); transform:translateY(-1px); }
+        .btn-o { background:transparent; color:#111318; font-weight:500; font-size:.85rem; padding:.58rem 1.4rem; border-radius:6px; border:1.5px solid #D1D5DB; cursor:pointer; display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; transition:all .2s; }
+        .btn-o:hover { border-color:#0D9E99; color:#0D9E99; transform:translateY(-1px); }
+
+        .sec { padding:4rem 1.5rem; }
+        .sec-alt { background:#F7F8FC; }
+        .wrap { max-width:1140px; margin:0 auto; }
+        .divider { height:1px; background:#E8EAF0; }
+        .slabel { font-family:'Space Mono',monospace; font-size:.63rem; letter-spacing:.18em; color:#0D9E99; text-transform:uppercase; font-weight:700; margin-bottom:.5rem; }
+        .sh { font-family:'Lora',serif; font-size:clamp(1.5rem,3vw,2.1rem); font-weight:600; color:#111318; margin-bottom:1.75rem; }
+
+        /* service cards — horizontal list feel */
+        .svc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:.85rem; }
+        .svc-card { background:#fff; border:1.5px solid #E8EAF0; border-radius:10px; padding:1.25rem 1.25rem 1.4rem; transition:all .25s; }
+        .svc-card:hover { border-color:#C7D2F8; box-shadow:0 4px 18px rgba(0,0,0,.07); transform:translateY(-2px); }
+
+        /* client cards — compact */
+        .cli-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1rem; }
+        .cli-card { background:#fff; border:1.5px solid #E8EAF0; border-radius:10px; overflow:hidden; transition:all .25s; }
+        .cli-card:hover { border-color:#CBD5E1; box-shadow:0 6px 22px rgba(0,0,0,.09); transform:translateY(-2px); }
+
+        /* project cards */
+        .prj-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:.85rem; }
+        .prj-card { background:#fff; border:1.5px solid #E8EAF0; border-radius:10px; overflow:hidden; transition:all .25s; }
+        .prj-card:hover { border-color:#C7D2F8; box-shadow:0 4px 18px rgba(0,0,0,.07); transform:translateY(-2px); }
+
+        .chip { font-size:.68rem; padding:.18rem .52rem; border-radius:4px; font-weight:500; }
+        .tech-chip { background:#F3F4F6; border:1px solid #E5E7EB; color:#52596B; font-size:.67rem; padding:.15rem .45rem; border-radius:3px; }
+
+        .pill { background:#F3F4F6; border:1px solid #E5E7EB; padding:.28rem .75rem; border-radius:100px; font-size:.75rem; color:#374151; transition:all .18s; display:inline-block; }
+        .pill:hover { background:#E6FAF9; border-color:#0D9E99; color:#0D9E99; }
+
+        .clink { display:flex; align-items:center; gap:.85rem; padding:.85rem 1rem; background:#F7F8FC; border:1.5px solid #E8EAF0; border-radius:8px; color:#111318; text-decoration:none; transition:all .2s; }
+        .clink:hover { border-color:#0D9E99; background:#F0FDFB; transform:translateX(3px); }
+
+        .live-dot { width:6px; height:6px; border-radius:50%; background:#10B981; display:inline-block; animation:lp 2s infinite; }
+        @keyframes lp { 0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.4)} 50%{box-shadow:0 0 0 4px rgba(16,185,129,0)} }
+        .collab-b { display:inline-flex; align-items:center; gap:.3rem; background:#EEF2FF; border:1px solid #C7D2F8; border-radius:100px; padding:.2rem .6rem; font-size:.66rem; font-weight:600; color:#4F46E5; }
+
+        .tab-b { padding:.38rem 1rem; border-radius:100px; font-size:.78rem; font-weight:500; border:1.5px solid #E4E7EF; background:#fff; color:#6B7280; cursor:pointer; transition:all .18s; }
+        .tab-b.on,.tab-b:hover { background:#E6FAF9; border-color:#0D9E99; color:#0D9E99; }
+
+        .exp-row { display:grid; grid-template-columns:160px 1fr; gap:1.5rem; padding:1.5rem 0; border-bottom:1px solid #E8EAF0; }
+        .exp-row:last-child { border-bottom:none; }
+
+        @keyframes up { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+        .a0{animation:up .6s ease-out forwards}
+        .a1{animation:up .6s .08s ease-out forwards;opacity:0}
+        .a2{animation:up .6s .16s ease-out forwards;opacity:0}
+        .a3{animation:up .6s .24s ease-out forwards;opacity:0}
+        .a4{animation:up .6s .32s ease-out forwards;opacity:0}
+
+        @media(max-width:768px){
+          .dn{display:none!important} .ds{display:block!important}
+          .exp-row{grid-template-columns:1fr;gap:.25rem}
+          .about-grid{grid-template-columns:1fr!important}
+          .contact-grid{grid-template-columns:1fr!important}
         }
-        
-        body {
-          font-family: 'Inter', sans-serif;
-          overflow-x: hidden;
-        }
-        
-        .orbitron {
-          font-family: 'Orbitron', sans-serif;
-        }
-        
-        .syne {
-          font-family: 'Syne', sans-serif;
-        }
-        
-        .gradient-text {
-          background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-        
-        .glow-card {
-          position: relative;
-          background: rgba(30, 41, 59, 0.4);
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(148, 163, 184, 0.1);
+        @media(min-width:769px){.ds{display:none!important}}
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+          position: fixed;
+          bottom: 25px;
+          right: 25px;
+          background: #25D366;
+          color: white;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+          cursor: pointer;
+          z-index: 1000;
           transition: all 0.3s ease;
+          border: none;
         }
-        
-        .glow-card:hover {
-          transform: translateY(-4px);
-          border-color: rgba(96, 165, 250, 0.3);
-          box-shadow: 0 0 30px rgba(96, 165, 250, 0.2);
+        .whatsapp-float:hover {
+          background: #20BA5A;
+          transform: scale(1.1);
+          box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
         }
-        
-        .skill-tag {
-          background: rgba(96, 165, 250, 0.1);
-          border: 1px solid rgba(96, 165, 250, 0.3);
-          padding: 0.5rem 1rem;
-          border-radius: 9999px;
-          transition: all 0.2s ease;
-          font-size: 0.875rem;
+        .whatsapp-float svg {
+          width: 32px;
+          height: 32px;
         }
-        
-        .skill-tag:hover {
-          background: rgba(96, 165, 250, 0.2);
-          border-color: rgba(96, 165, 250, 0.5);
-          transform: scale(1.05);
-        }
-        
-        .section-title {
-          font-family: 'Syne', sans-serif;
-          font-weight: 800;
-          font-size: 2.5rem;
-          margin-bottom: 3rem;
-        }
-        
-        .floating {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        
-        .fade-in {
-          animation: fadeIn 0.8s ease-in;
-        }
-        
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .slide-in-left {
-          animation: slideInLeft 0.6s ease-out;
-        }
-        
-        @keyframes slideInLeft {
-          from { opacity: 0; transform: translateX(-30px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        
-        .nav-link {
-          position: relative;
-          transition: color 0.3s ease;
-        }
-        
-        .nav-link::after {
-          content: '';
-          position: absolute;
-          bottom: -4px;
-          left: 0;
-          width: 0;
-          height: 2px;
-          background: linear-gradient(90deg, #60a5fa, #a78bfa);
-          transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover::after,
-        .nav-link.active::after {
-          width: 100%;
-        }
-        
-        .project-card {
-          background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(51, 65, 85, 0.4));
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(148, 163, 184, 0.1);
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .project-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.1), transparent);
-          transition: left 0.5s ease;
-        }
-        
-        .project-card:hover::before {
-          left: 100%;
-        }
-        
-        .project-card:hover {
-          transform: translateY(-8px) scale(1.02);
-          border-color: rgba(96, 165, 250, 0.4);
-          box-shadow: 0 20px 40px rgba(96, 165, 250, 0.15);
-        }
-        
-        .bg-grid {
-          background-image: 
-            linear-gradient(rgba(96, 165, 250, 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(96, 165, 250, 0.05) 1px, transparent 1px);
-          background-size: 50px 50px;
-        }
-        
-        .contact-btn {
-          background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+
+        /* Email Floating Button */
+        .email-float {
+          position: fixed;
+          bottom: 95px;
+          right: 25px;
+          background: #0D9E99;
+          color: white;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 20px rgba(13, 158, 153, 0.4);
+          cursor: pointer;
+          z-index: 1000;
           transition: all 0.3s ease;
+          border: none;
         }
-        
-        .contact-btn:hover {
-          background: linear-gradient(135deg, #2563eb, #7c3aed);
-          transform: scale(1.05);
-          box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        .email-float:hover {
+          background: #0B8A85;
+          transform: scale(1.1);
+          box-shadow: 0 6px 30px rgba(13, 158, 153, 0.6);
+        }
+
+        @media(max-width:768px){
+          .whatsapp-float, .email-float {
+            width: 50px;
+            height: 50px;
+          }
+          .whatsapp-float svg {
+            width: 26px;
+            height: 26px;
+          }
+          .email-float {
+            bottom: 85px;
+          }
         }
       `}</style>
 
-      {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-slate-950/90 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}>
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="orbitron text-2xl font-bold gradient-text">
-              NJ
-            </div>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              {['home', 'about', 'skills', 'experience', 'projects', 'education', 'contact'].map((section) => (
-                <button
-                  key={section}
-                  onClick={() => scrollToSection(section)}
-                  className={`nav-link capitalize text-sm font-medium ${activeSection === section ? 'text-blue-400 active' : 'text-slate-300 hover:text-blue-400'}`}
-                >
-                  {section}
-                </button>
-              ))}
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden text-slate-300"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+      {/* NAV */}
+      <nav className={scrolled ? 'scrolled' : ''} style={{ background: scrolled ? undefined : 'rgba(255,255,255,0)' }}>
+        <div className="wrap" style={{ padding:'.85rem 1.5rem', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:'.5rem' }}>
+            <span className="mono" style={{ fontSize:'.9rem', color:'#0D9E99' }}>JN</span>
+            <span style={{ width:1, height:14, background:'#D1D5DB', display:'inline-block' }} />
+            <span style={{ fontSize:'.75rem', color:C.light, fontWeight:500 }}>Full-Stack Developer</span>
           </div>
-
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <div className="md:hidden mt-4 pb-4 space-y-2 fade-in">
-              {['home', 'about', 'skills', 'experience', 'projects', 'education', 'contact'].map((section) => (
-                <button
-                  key={section}
-                  onClick={() => scrollToSection(section)}
-                  className="block w-full text-left py-2 px-4 capitalize text-slate-300 hover:text-blue-400 hover:bg-slate-800/50 rounded transition-all"
-                >
-                  {section}
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="dn" style={{ display:'flex', alignItems:'center', gap:'2rem' }}>
+            {navLinks.map(l => (
+              <button key={l} onClick={() => go(l)} className={`nb ${active===l?'on':''}`} style={{ textTransform:'capitalize' }}>{l === 'clients' ? 'Client Work' : l}</button>
+            ))}
+            {/* <a href="mailto:ndabari79@gmail.com" className="btn-p" style={{ padding:'.44rem 1.1rem', fontSize:'.78rem' }}>Hire Me</a> */}
+          </div>
+          <button className="ds" onClick={() => setMenuOpen(!menuOpen)} style={{ background:'none', border:'none', color:C.text, cursor:'pointer', display:'none' }}>
+            {menuOpen ? <X size={20}/> : <Menu size={20}/>}
+          </button>
         </div>
+        {menuOpen && (
+          <div style={{ background:'#fff', padding:'.5rem 1.5rem 1.25rem', borderTop:`1px solid ${C.border}` }}>
+            {navLinks.map(l => (
+              <button key={l} onClick={() => go(l)} style={{ display:'block', width:'100%', textAlign:'left', padding:'.65rem 0', background:'none', border:'none', borderBottom:`1px solid ${C.border}`, color:C.mid, fontSize:'.9rem', cursor:'pointer', textTransform:'capitalize' }}>
+                {l === 'clients' ? 'Client Work' : l}
+              </button>
+            ))}
+            <a href="mailto:ndabari79@gmail.com" className="btn-p" style={{ marginTop:'.85rem', width:'100%', justifyContent:'center' }}>Hire Me</a>
+          </div>
+        )}
       </nav>
 
-      {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-grid">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/50 to-slate-950"></div>
-        <div className="max-w-6xl mx-auto px-6 py-20 relative z-10">
-          <div className="text-center fade-in">
-            <div className="inline-block mb-6">
-              <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 p-1 floating">
-                <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center">
-                  <Code size={48} className="text-blue-400" />
-                </div>
-              </div>
+      {/* HERO */}
+      <section id="home" style={{ background:'linear-gradient(155deg,#F0FDFB 0%,#F7F8FC 50%,#fff 100%)', padding:'7.5rem 1.5rem 4.5rem', position:'relative', overflow:'hidden' }}>
+        <div style={{ position:'absolute', top:-100, right:-100, width:420, height:420, borderRadius:'50%', background:'radial-gradient(circle,rgba(13,158,153,.07) 0%,transparent 70%)', pointerEvents:'none' }} />
+        <div className="wrap">
+          <div style={{ maxWidth:620 }}>
+            <div className="slabel a0" style={{ display:'flex', alignItems:'center', gap:'.45rem', marginBottom:'1rem' }}>
+              <span className="live-dot" />Available for projects · Nairobi
             </div>
-            
-            <h1 className="syne text-6xl md:text-7xl font-black mb-4">
-              <span className="gradient-text">JOY NDABARI</span>
-              <br />
+            <h1 className="serif a1" style={{ fontSize:'clamp(2.2rem,5.5vw,3.9rem)', lineHeight:1.12, marginBottom:'1.1rem', fontWeight:600 }}>
+              Joy Ndabari <br/>
+              <span style={{ color:'#0D9E99' }}>builds products</span>{' '}
+              <span style={{ fontStyle:'italic', fontWeight:400 }}>that grow businesses.</span>
             </h1>
-            
-            <p className="text-xl md:text-2xl text-slate-400 mb-4 font-medium">
-              Full-Stack Developer & IT Specialist
+            <p className="a2" style={{ fontSize:'1rem', color:C.mid, lineHeight:1.75, maxWidth:480, marginBottom:'1.75rem' }}>
+              Software developer specializing in e-commerce platforms, business web apps, and mobile solutions. 
             </p>
-            
-            <p className="text-lg text-slate-500 max-w-2xl mx-auto mb-8">
-              Passionate about building scalable applications with expertise in mobile development, 
-              backend systems, and network administration.
-            </p>
-            
-            <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
-              <a href="mailto:ndabari79@gmail.com" className="contact-btn px-6 py-3 rounded-full font-semibold flex items-center gap-2">
-                <Mail size={20} />
-                Get In Touch
+            <div className="a3" style={{ display:'flex', gap:'.75rem', flexWrap:'wrap', marginBottom:'2.75rem' }}>
+              <a href="https://wa.me/254706025696?text=Hi%20Joy,%20I%27d%20like%20to%20discuss%20a%20project" target="_blank" rel="noopener noreferrer" className="btn-p" style={{ background:'#25D366' }}>
+                <MessageCircle size={14}/>WhatsApp Me
               </a>
-              <a href="https://github.com/Nimmoh" target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-full font-semibold border-2 border-purple-500 text-purple-400 hover:bg-purple-500/10 transition-all flex items-center gap-2">
-                <Github size={20} />
-                GitHub
+              <a href="mailto:ndabari79@gmail.com" className="btn-o">
+                <Mail size={14}/>Email Me
               </a>
-              <a href="www.linkedin.com/in/joy-ndabari-36897a165"
-               target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-full font-semibold border-2 border-blue-500 text-blue-400 hover:bg-blue-500/10 transition-all flex items-center gap-2">
-                <Linkedin size={20} />
-                LinkedIn
-              </a>
+              {/* <button onClick={() => go('clients')} className="btn-o">View work</button> */}
             </div>
-            
-            <div className="flex items-center justify-center gap-8 text-slate-400">
-              <div>
-                <div className="text-3xl font-bold text-blue-400">3+</div>
-                <div className="text-sm">Years Experience</div>
-              </div>
-              <div className="h-12 w-px bg-slate-700"></div>
-              <div>
-                <div className="text-3xl font-bold text-purple-400">10+</div>
-                <div className="text-sm">Projects Completed</div>
-              </div>
-              <div className="h-12 w-px bg-slate-700"></div>
-              <div>
-                <div className="text-3xl font-bold text-pink-400">4</div>
-                <div className="text-sm">Companies</div>
-              </div>
-            </div>
+            {/* <div className="a4" style={{ display:'flex', gap:'.85rem', flexWrap:'wrap' }}>
+              {[
+                { n:'3+', l:'Years experience', c:'#0D9E99' },
+                { n:'20+', l:'Projects delivered', c:'#6366F1' },
+                { n:'5+', l:'Live client sites', c:'#10B981' },
+              ].map((s,i) => (
+                <div key={i} style={{ textAlign:'center', padding:'.9rem 1.4rem', background:'#fff', border:`1.5px solid ${C.border}`, borderRadius:8, flex:'1 1 100px' }}>
+                  <div style={{ fontFamily:"'Lora',serif", fontSize:'2rem', fontWeight:600, color:s.c, lineHeight:1 }}>{s.n}</div>
+                  <div style={{ fontSize:'.72rem', color:C.light, marginTop:'.2rem' }}>{s.l}</div>
+                </div>
+              ))}
+            </div> */}
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 relative">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="section-title gradient-text text-center slide-in-left">About Me</h2>
-          
-          <div className="glow-card rounded-2xl p-8 md:p-12 fade-in">
-            <p className="text-lg text-slate-300 leading-relaxed mb-6">
-              Results-driven Information Technology professional with experience in designing, developing, and optimizing 
-              scalable applications. I specialize in creating user-friendly solutions that bridge the gap between technical 
-              excellence and business needs.
-            </p>
-            
-            <p className="text-lg text-slate-300 leading-relaxed mb-6">
-              My expertise spans across <span className="text-blue-400 font-semibold">mobile development with Flutter</span>, 
-              <span className="text-purple-400 font-semibold"> backend services with Node.js</span>, and 
-              <span className="text-pink-400 font-semibold"> network administration</span>. I'm passionate about delivering 
-              high-quality code, maintaining system performance, and creating seamless API integrations.
-            </p>
-            
-            <p className="text-lg text-slate-300 leading-relaxed">
-              Currently working at multiple tech companies, I'm continuously expanding my knowledge in advanced IT infrastructure 
-              and system optimization. I believe in writing clean, maintainable code and providing exceptional technical support 
-              to ensure smooth business operations.
-            </p>
-            
-            <div className="mt-8 flex flex-wrap gap-4">
-              <div className="flex items-center gap-2 text-slate-400">
-                <Mail size={20} className="text-blue-400" />
-                <span>ndabari79@gmail.com</span>
-              </div>
-              <div className="flex items-center gap-2 text-slate-400">
-                <span className="text-blue-400">| </span>
-                <span>+254 706 025 696</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div className="divider" />
 
-      {/* Skills Section */}
-      <section id="skills" className="py-20 bg-slate-900/30">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="section-title gradient-text text-center slide-in-left">Technical Skills</h2>
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Backend Development */}
-            <div className="glow-card rounded-2xl p-8 fade-in">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-blue-500/10 rounded-lg">
-                  <Database size={28} className="text-blue-400" />
-                </div>
-                <h3 className="text-2xl font-bold syne text-blue-400">Backend Development</h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {skills.backend.map((skill, idx) => (
-                  <span key={idx} className="skill-tag">{skill}</span>
-                ))}
-              </div>
-            </div>
-
-            {/* Frontend & Mobile */}
-            <div className="glow-card rounded-2xl p-8 fade-in" style={{animationDelay: '0.1s'}}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-purple-500/10 rounded-lg">
-                  <Smartphone size={28} className="text-purple-400" />
-                </div>
-                <h3 className="text-2xl font-bold syne text-purple-400">Frontend & Mobile</h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {skills.frontend.map((skill, idx) => (
-                  <span key={idx} className="skill-tag">{skill}</span>
-                ))}
-              </div>
-            </div>
-
-            {/* Network & System Admin */}
-            <div className="glow-card rounded-2xl p-8 fade-in" style={{animationDelay: '0.2s'}}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-pink-500/10 rounded-lg">
-                  <Network size={28} className="text-pink-400" />
-                </div>
-                <h3 className="text-2xl font-bold syne text-pink-400">Network & System Admin</h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {skills.network.map((skill, idx) => (
-                  <span key={idx} className="skill-tag">{skill}</span>
-                ))}
-              </div>
-            </div>
-
-            {/* Tools & Version Control */}
-            <div className="glow-card rounded-2xl p-8 fade-in" style={{animationDelay: '0.3s'}}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-cyan-500/10 rounded-lg">
-                  <Code size={28} className="text-cyan-400" />
-                </div>
-                <h3 className="text-2xl font-bold syne text-cyan-400">Tools & Version Control</h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {skills.tools.map((skill, idx) => (
-                  <span key={idx} className="skill-tag">{skill}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Experience Section */}
-      <section id="experience" className="py-20">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="section-title gradient-text text-center slide-in-left">Professional Experience</h2>
-          
-          <div className="space-y-6">
-            {experience.map((exp, idx) => (
-              <div key={idx} className="glow-card rounded-2xl p-8 fade-in" style={{animationDelay: `${idx * 0.1}s`}}>
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                  <div>
-                    <h3 className="text-2xl font-bold syne text-blue-400 mb-1">{exp.title}</h3>
-                    <p className="text-xl text-slate-300 font-semibold">{exp.company}</p>
-                  </div>
-                  <span className="text-slate-400 mt-2 md:mt-0 font-medium">{exp.period}</span>
-                </div>
-                
-                <ul className="space-y-3">
-                  {exp.highlights.map((highlight, hIdx) => (
-                    <li key={hIdx} className="flex items-start gap-3 text-slate-300">
-                      <ChevronRight size={20} className="text-blue-400 flex-shrink-0 mt-1" />
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects" className="py-20 bg-slate-900/30">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="section-title gradient-text text-center slide-in-left">Featured Projects</h2>
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            {projects.map((project, idx) => (
-              <div key={idx} className="project-card rounded-2xl p-8" style={{animationDelay: `${idx * 0.1}s`}}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-2xl font-bold syne text-slate-100">{project.title}</h3>
-                  <div className="flex items-center gap-2">
-                    {project.featured && (
-                      <span className="px-3 py-1 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 text-yellow-400 rounded-full text-xs font-semibold border border-yellow-500/30 flex items-center gap-1">
-                        <Star size={12} fill="currentColor" />
-                        Featured
-                      </span>
-                    )}
-                    <span className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm font-semibold">
-                      {project.category}
-                    </span>
-                  </div>
-                </div>
-                
-                <p className="text-slate-400 mb-6 leading-relaxed">{project.description}</p>
-                
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tech.map((tech, tIdx) => (
-                    <span key={tIdx} className="px-3 py-1 bg-slate-800/50 text-slate-300 rounded-full text-sm border border-slate-700">
-                      {tech}
-                    </span>
+      {/* SERVICES */}
+      <section id="services" className="sec">
+        <div className="wrap">
+          <div className="slabel">What I offer</div>
+          <div className="sh" style={{ marginBottom:'1.25rem' }}>Services that deliver results</div>
+          <div className="svc-grid">
+            {services.map((s,i) => (
+              <div key={i} className="svc-card">
+                <div style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', width:38, height:38, borderRadius:8, background:s.bg, color:s.color, marginBottom:'.85rem' }}>{s.icon}</div>
+                <div style={{ fontSize:'.92rem', fontWeight:700, color:C.text, marginBottom:'.65rem' }}>{s.title}</div>
+                <div style={{ display:'flex', flexDirection:'column', gap:'.35rem' }}>
+                  {s.points.map((p,pi) => (
+                    <div key={pi} style={{ display:'flex', alignItems:'center', gap:'.45rem', fontSize:'.8rem', color:C.mid }}>
+                   {p}
+                    </div>
                   ))}
                 </div>
-                
-                {project.github ? (
-                  <a 
-                    href={project.github} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-blue-400 font-semibold hover:gap-3 transition-all group"
-                  >
-                    <Github size={18} />
-                    <span>View on GitHub</span>
-                    <ExternalLink size={18} className="group-hover:rotate-45 transition-transform" />
-                  </a>
-                ) : (
-                  <button className="flex items-center gap-2 text-slate-500 font-semibold cursor-default">
-                    <Code size={18} />
-                    <span>Private Repository</span>
-                  </button>
-                )}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Education Section */}
-      <section id="education" className="py-20">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="section-title gradient-text text-center slide-in-left">Education & Certification</h2>
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            {education.map((edu, idx) => (
-              <div key={idx} className="glow-card rounded-2xl p-8 fade-in" style={{animationDelay: `${idx * 0.1}s`}}>
-                <h3 className="text-xl font-bold syne text-blue-400 mb-2">{edu.degree}</h3>
-                <p className="text-lg text-slate-300 font-semibold mb-1">{edu.institution}</p>
-                <p className="text-slate-400">{edu.period}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <div className="divider" />
 
-      {/* Contact Section */}
-      <section id="contact" className="py-20 bg-slate-900/30">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="section-title gradient-text slide-in-left">Let's Work Together</h2>
-          
-          <p className="text-xl text-slate-300 mb-12 max-w-2xl mx-auto">
-            I'm always interested in hearing about new projects and opportunities. 
-            Whether you have a question or just want to say hi, feel free to reach out!
+      {/* CLIENT WORK */}
+      <section id="clients" className="sec sec-alt">
+        <div className="wrap">
+          <div className="slabel">Client work & collaborations</div>
+          <div className="sh" style={{ marginBottom:'.4rem' }}>Real projects, real clients</div>
+          <p style={{ fontSize:'.88rem', color:C.mid, marginBottom:'1.5rem' }}>
+            Delivered for businesses across Kenya including collaboration with <span style={{ color:'#0D9E99', fontWeight:600 }}>Chambu Digital</span>.
           </p>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
-            <a href="mailto:ndabari79@gmail.com" className="contact-btn px-8 py-4 rounded-full font-semibold flex items-center gap-3 text-lg">
-              <Mail size={24} />
-              ndabari79@gmail.com
-            </a>
-            <a href="https://github.com/Nimmoh" target="_blank" rel="noopener noreferrer" className="px-8 py-4 rounded-full font-semibold border-2 border-purple-500 text-purple-400 hover:bg-purple-500/10 transition-all flex items-center gap-3 text-lg">
-              <Github size={24} />
-              GitHub
-            </a>
-            <a href="www.linkedin.com/in/joy-ndabari-36897a165" target="_blank" rel="noopener noreferrer" className="px-8 py-4 rounded-full font-semibold border-2 border-blue-500 text-blue-400 hover:bg-blue-500/10 transition-all flex items-center gap-3 text-lg">
-              <Linkedin size={24} />
-              LinkedIn
-            </a>
-          </div>
-          
-          <div className="flex items-center justify-center gap-6 text-slate-400">
-            <div className="flex items-center gap-2">
-              <span></span>
-              <span>+254 706 025 696</span>
-            </div>
-            <div className="hidden sm:block h-6 w-px bg-slate-700"></div>
-            <div className="flex items-center gap-2">
-              <span></span>
-              <span>+254 727 834 901</span>
-            </div>
+          <div className="cli-grid">
+            {clients.map((p,i) => (
+              <div key={i} className="cli-card">
+                <div style={{ height:3, background:p.color }} />
+                <div style={{ padding:'1.1rem 1.25rem' }}>
+                  {/* badges */}
+                  <div style={{ display:'flex', alignItems:'center', gap:'.45rem', flexWrap:'wrap', marginBottom:'.65rem' }}>
+                    {p.live && <span style={{ display:'inline-flex', alignItems:'center', gap:'.3rem', fontSize:'.66rem', color:'#059669', fontWeight:700 }}><span className="live-dot"/>LIVE</span>}
+                    {p.collab && <span className="collab-b">Chambu Digital</span>}
+                    <span style={{ fontSize:'.66rem', color:p.color, fontWeight:700, fontFamily:"'Space Mono',monospace", letterSpacing:'.06em', textTransform:'uppercase' }}>{p.role}</span>
+                  </div>
+
+                  <div style={{ fontWeight:700, fontSize:'1.05rem', color:C.text, marginBottom:'.15rem' }}>{p.title}</div>
+                  <div style={{ fontSize:'.74rem', color:C.light, marginBottom:'.7rem', fontStyle:'italic' }}>{p.sub}</div>
+
+                  <p style={{ fontSize:'.83rem', color:C.mid, lineHeight:1.65, marginBottom:'.8rem' }}>{p.desc}</p>
+
+                  {/* highlights */}
+                  <div style={{ display:'flex', flexWrap:'wrap', gap:'.3rem', marginBottom:'.75rem' }}>
+                    {p.highlights.map((h,hi) => (
+                      <span key={hi} className="chip" style={{ background:p.bg, border:`1px solid ${p.color}25`, color:p.color }}>✓ {h}</span>
+                    ))}
+                  </div>
+
+                  {/* tech */}
+                  {/* <div style={{ display:'flex', flexWrap:'wrap', gap:'.28rem' }}>
+                    {p.tech.map((t,ti) => <span key={ti} className="tech-chip">{t}</span>)}
+                  </div> */}
+                </div>
+
+                {/* footer */}
+                <div style={{ padding:'.65rem 1.25rem', borderTop:`1px solid ${C.border}`, display:'flex', gap:1, alignItems:'center' }}>
+                  {p.url
+                    ? <a href={p.url} target="_blank" rel="noopener noreferrer" style={{ display:'inline-flex', alignItems:'center', gap:'.35rem', fontSize:'.79rem', color:'#0D9E99', textDecoration:'none', fontWeight:600 }}><Globe size={13}/>Visit Site <ExternalLink size={11}/></a>
+                    : p.github
+                      ? <a href={p.github} target="_blank" rel="noopener noreferrer" style={{ display:'inline-flex', alignItems:'center', gap:'.35rem', fontSize:'.79rem', color:C.mid, textDecoration:'none' }}><Github size={13}/>GitHub</a>
+                      : <span style={{ fontSize:'.74rem', color:C.light }}>Private / Proprietary</span>
+                  }
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <footer className="py-8 border-t border-slate-800">
-        <div className="max-w-6xl mx-auto px-6 text-center text-slate-400">
-          <p className="orbitron">© 2025  Joy Ndabari . </p>
+      <div className="divider" />
+
+      {/* PROJECTS */}
+      <section id="work" className="sec">
+        <div className="wrap">
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:'1rem', marginBottom:'1.5rem' }}>
+            <div>
+              <div className="slabel">Portfolio</div>
+              <div className="sh" style={{ marginBottom:0 }}>Personal & practice projects</div>
+            </div>
+            <div style={{ display:'flex', gap:'.35rem', flexWrap:'wrap' }}>
+              {[{k:'all',l:'All'},{k:'ecommerce',l:'E-commerce'},{k:'webapp',l:'Web Apps'},{k:'mobile',l:'Mobile'}].map(t => (
+                <button key={t.k} onClick={() => setTab(t.k)} className={`tab-b ${tab===t.k?'on':''}`}>{t.l}</button>
+              ))}
+            </div>
+          </div>
+          <div className="prj-grid">
+            {filteredProjects.map((p,i) => (
+              <div key={i} className="prj-card">
+                <div style={{ height:2.5, background:p.color }} />
+                <div style={{ padding:'1.1rem 1.1rem 1.25rem' }}>
+                  <span className="chip" style={{ background:p.bg, border:`1px solid ${p.color}28`, color:p.color, marginBottom:'.65rem', display:'inline-block' }}>{p.tag}</span>
+                  <div style={{ fontWeight:700, fontSize:'.95rem', color:C.text, marginBottom:'.45rem' }}>{p.title}</div>
+                  <p style={{ fontSize:'.81rem', color:C.mid, lineHeight:1.6, marginBottom:'.7rem' }}>{p.desc}</p>
+                  <div style={{ display:'flex', flexWrap:'wrap', gap:'.28rem', marginBottom:'.7rem' }}>
+                    {p.results?.map((r,ri) => <span key={ri} className="chip" style={{ background:p.bg, border:`1px solid ${p.color}28`, color:p.color }}>{r}</span>)}
+                  </div>
+                  <div style={{ display:'flex', flexWrap:'wrap', gap:'.25rem', marginBottom:'.85rem' }}>
+                    {p.tech.map((t,ti) => <span key={ti} className="tech-chip">{t}</span>)}
+                  </div>
+                  {p.github
+                    ? <a href={p.github} target="_blank" rel="noopener noreferrer" style={{ display:'inline-flex', alignItems:'center', gap:'.35rem', fontSize:'.78rem', color:'#0D9E99', textDecoration:'none', fontWeight:600 }}><Github size={13}/>GitHub <ExternalLink size={11}/></a>
+                    : <span style={{ fontSize:'.74rem', color:C.light }}>Private</span>
+                  }
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="divider" />
+
+      {/* ABOUT */}
+      <section id="about" className="sec sec-alt">
+        <div className="wrap about-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'4rem', alignItems:'start' }}>
+          <div>
+            <div className="slabel">About me</div>
+            <div className="sh">Developer & IT specialist, Nairobi</div>
+            <p style={{ fontSize:'.88rem', color:C.mid, lineHeight:1.8, marginBottom:'.85rem' }}>
+              Results-driven IT professional who bridges technical excellence with real business outcomes. I've shipped e-commerce platforms, mobile POS systems, backend APIs, and corporate websites for clients across Kenya.
+            </p>
+            <p style={{ fontSize:'.88rem', color:C.mid, lineHeight:1.8, marginBottom:'1.5rem' }}>
+              Worked simultaneously across Dukakit, WebInc Technologies, and Viewtech — while collaborating with <span style={{ color:'#0D9E99', fontWeight:600 }}>Chambu Digital</span> on client e-commerce projects.
+            </p>
+            <div style={{ display:'flex', flexDirection:'column', borderTop:`1px solid ${C.border}` }}>
+              {[
+                ['Degree', 'BSc Information Technology — JKUAT'],
+                ['Cert.', 'Mobile Software Dev — EMobilis'],
+                ['Location', 'Nairobi, Kenya'],
+                ['Status', 'Open to freelance & full-time roles'],
+              ].map(([k,v],i) => (
+                <div key={i} style={{ display:'flex', gap:'.75rem', padding:'.55rem 0', borderBottom:`1px solid ${C.border}`, fontSize:'.83rem' }}>
+                  <span style={{ color:C.light, minWidth:70, fontWeight:600 }}>{k}</span>
+                  <span style={{ color:C.text }}>{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div style={{ fontSize:'.68rem', fontWeight:700, letterSpacing:'.1em', textTransform:'uppercase', color:C.light, marginBottom:'1rem' }}>Tech Stack</div>
+            {[
+              { label:'Frontend & Mobile', color:'#0D9E99', skills:['Next.js','React.js','Flutter','TypeScript','JavaScript','Tailwind CSS','HTML5/CSS3'] },
+              { label:'Backend & Database', color:'#6366F1', skills:['Node.js','Express.js','MongoDB','SQL','RESTful APIs'] },
+              { label:'Auth & Payments', color:'#EF4444', skills:['JWT','Google OAuth','MPesa API','SasaPay'] },
+              { label:'Tools', color:'#D97706', skills:['Git & GitHub','Postman','Vercel','Vite'] },
+            ].map((g,gi) => (
+              <div key={gi} style={{ marginBottom:'1.1rem' }}>
+                <div style={{ fontSize:'.72rem', color:g.color, marginBottom:'.4rem', fontWeight:700 }}>{g.label}</div>
+                <div style={{ display:'flex', flexWrap:'wrap', gap:'.28rem' }}>
+                  {g.skills.map((s,si) => <span key={si} className="pill">{s}</span>)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="divider" />
+
+      {/* EXPERIENCE */}
+      <section id="experience" className="sec">
+        <div className="wrap">
+          <div className="slabel">Career</div>
+          <div className="sh">Professional experience</div>
+          {experience.map((e,i) => (
+            <div key={i} className="exp-row">
+              <div style={{ paddingTop:'.1rem' }}>
+                <div style={{ display:'flex', alignItems:'center', gap:'.45rem' }}>
+                  <div style={{ width:9, height:9, borderRadius:'50%', background:e.dot, flexShrink:0 }} />
+                  <span style={{ fontSize:'.78rem', fontWeight:700, color:C.text }}>{e.company}</span>
+                </div>
+              </div>
+              <div>
+                <div style={{ fontSize:'.95rem', fontWeight:700, color:C.text, marginBottom:'.6rem' }}>{e.title}</div>
+                <div style={{ display:'flex', flexDirection:'column', gap:'.32rem' }}>
+                  {e.points.map((pt,pi) => (
+                    <div key={pi} style={{ display:'flex', gap:'.55rem', alignItems:'flex-start', fontSize:'.83rem', color:C.mid, lineHeight:1.6 }}>
+                     <span>{pt}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div className="divider" />
+
+      {/* CONTACT */}
+      <section id="contact" className="sec sec-alt">
+        <div className="wrap contact-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'4rem', alignItems:'start' }}>
+          <div>
+            <div className="slabel">Get in touch</div>
+            <div className="sh">Let's build something together</div>
+            <p style={{ fontSize:'.88rem', color:C.mid, lineHeight:1.78, marginBottom:'1.5rem' }}>
+              Need an e-commerce store, business website, or mobile app? I'm available for new projects. Let's talk.
+            </p>
+            <div style={{ display:'flex', gap:'.75rem', flexWrap:'wrap' }}>
+              <a href="https://wa.me/254706025696?text=Hi%20Joy,%20I%27d%20like%20to%20discuss%20a%20project" target="_blank" rel="noopener noreferrer" className="btn-p" style={{ background:'#25D366' }}>
+                <MessageCircle size={16}/>WhatsApp Me
+              </a>
+              <a href="mailto:ndabari79@gmail.com" className="btn-o">
+                <Mail size={16}/>Send Email
+              </a>
+            </div>
+          </div>
+          <div style={{ display:'flex', flexDirection:'column', gap:'.5rem' }}>
+            {[
+              { icon:<MessageCircle size={15}/>, label:'WhatsApp', value:'+254 706 025 696', href:'https://wa.me/254706025696?text=Hi%20Joy,%20I%27d%20like%20to%20discuss%20a%20project', color:'#25D366' },
+              { icon:<Mail size={15}/>, label:'Email', value:'ndabari79@gmail.com', href:'mailto:ndabari79@gmail.com', color:'#0D9E99' },
+              { icon:<Phone size={15}/>, label:'Phone', value:'+254 706 025 696', href:'tel:+254706025696', color:'#6366F1' },
+              // { icon:<Phone size={15}/>, label:'Alt. Phone', value:'+254 727 834 901', href:'tel:+254727834901', color:'#6366F1' },
+              { icon:<Github size={15}/>, label:'GitHub', value:'github.com/Nimmoh', href:'https://github.com/Nimmoh', color:'#111318' },
+              { icon:<Linkedin size={15}/>, label:'LinkedIn', value:'Joy Ndabari', href:'https://www.linkedin.com/in/joy-ndabari-36897a165', color:'#0A66C2' },
+            ].map((c,i) => (
+              <a key={i} href={c.href} target={c.href.startsWith('http')?'_blank':undefined} rel="noopener noreferrer" className="clink">
+                <span style={{ color:c.color, flexShrink:0 }}>{c.icon}</span>
+                <div style={{ flex:1 }}>
+                  <div style={{ fontSize:'.63rem', color:C.light, textTransform:'uppercase', letterSpacing:'.07em', fontWeight:600, marginBottom:'.08rem' }}>{c.label}</div>
+                  <div style={{ fontSize:'.83rem', fontWeight:500, color:C.text }}>{c.value}</div>
+                </div>
+                <ArrowRight size={12} style={{ color:C.light }}/>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="divider" />
+
+      {/* FOOTER */}
+      <footer style={{ background:C.bg }}>
+        <div className="wrap" style={{ padding:'1.25rem 1.5rem', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:'.75rem' }}>
+          <span className="mono" style={{ fontSize:'.65rem', color:C.light }}>© 2026 Joy Ndabari · Nairobi</span>
+          <div style={{ display:'flex', gap:'1rem' }}>
+            {[
+              { href:'https://github.com/Nimmoh', icon:<Github size={15}/> },
+              { href:'https://www.linkedin.com/in/joy-ndabari-36897a165', icon:<Linkedin size={15}/> },
+              { href:'mailto:ndabari79@gmail.com', icon:<Mail size={15}/> },
+            ].map((l,i) => (
+              <a key={i} href={l.href} target={l.href.startsWith('http')?'_blank':undefined} rel="noopener noreferrer"
+                style={{ color:C.light, transition:'color .2s' }}
+                onMouseOver={e=>e.currentTarget.style.color='#0D9E99'}
+                onMouseOut={e=>e.currentTarget.style.color=C.light}>
+                {l.icon}
+              </a>
+            ))}
+          </div>
         </div>
       </footer>
+
+      {/* Floating Contact Buttons */}
+      <a 
+        href="https://wa.me/254706025696?text=Hi%20Joy,%20I%27d%20like%20to%20discuss%20a%20project" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="whatsapp-float"
+        title="Chat on WhatsApp"
+      >
+        <MessageCircle />
+      </a>
+      
+      <a 
+        href="mailto:ndabari79@gmail.com" 
+        className="email-float"
+        title="Send Email"
+      >
+        <Mail />
+      </a>
     </div>
   );
 };
