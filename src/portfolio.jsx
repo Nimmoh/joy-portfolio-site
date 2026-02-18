@@ -268,9 +268,9 @@ const Portfolio = () => {
       <nav className={scrolled ? 'scrolled' : ''} style={{ background: scrolled ? undefined : 'rgba(255,255,255,0)' }}>
         <div className="wrap" style={{ padding:'.85rem 1.5rem', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
           <div style={{ display:'flex', alignItems:'center', gap:'.5rem' }}>
-            <span className="mono" style={{ fontSize:'.9rem', color:'#0D9E99' }}>JN</span>
+            <span className="mono" style={{ fontSize:'.9rem', color:'#0D9E99' }}>Joy Ndabari</span>
             <span style={{ width:1, height:14, background:'#D1D5DB', display:'inline-block' }} />
-            <span style={{ fontSize:'.75rem', color:C.light, fontWeight:500 }}>Full-Stack Developer</span>
+            <span style={{ fontSize:'.75rem', color:C.light, fontWeight:500 }}>Sofware Developer</span>
           </div>
           <div className="dn" style={{ display:'flex', alignItems:'center', gap:'2rem' }}>
             {navLinks.map(l => (
@@ -303,8 +303,7 @@ const Portfolio = () => {
               <span className="live-dot" />Available for projects · Nairobi
             </div>
             <h1 className="serif a1" style={{ fontSize:'clamp(2.2rem,5.5vw,3.9rem)', lineHeight:1.12, marginBottom:'1.1rem', fontWeight:600 }}>
-              Joy Ndabari <br/>
-              <span style={{ color:'#0D9E99' }}>builds products</span>{' '}
+              <span style={{ color:'#0D9E99' }}>Building Solutions</span>{' '}
               <span style={{ fontStyle:'italic', fontWeight:400 }}>that grow businesses.</span>
             </h1>
             <p className="a2" style={{ fontSize:'1rem', color:C.mid, lineHeight:1.75, maxWidth:480, marginBottom:'1.75rem' }}>
